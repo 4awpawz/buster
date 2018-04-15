@@ -11,8 +11,7 @@ const directives = [
 
 const process = () => {
     console.log("processing started");
-    var count = manifestFactory(directives);
-    console.log(`manifest contains ${count} operational directives`);
+    manifestFactory()(directives);
     console.log("processing completed");
 };
 
