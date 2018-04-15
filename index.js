@@ -1,9 +1,20 @@
 const fs = require("fs");
-const md5File = require("md5-file/promise");
-const manifestEntry = require("./lib/manifest");
+const manifestFactory = require("./lib/manifest");
 
-const files = ["package.json:1:."];
+// a mock for a config, a package.json hash or command line arguments
+const directives = [
+    "test-project/index.html:2:test-project",
+    "test-project/script/test.js:1:test-project",
+    "test-project/media/alphabet-arts-and-crafts-blog-459688.jpg:1:test-project",
+    "test-project/css/test.css:3:test-project"
+];
 
-manifestEntry(files[0]);
+const process = () => {
+    console.log("processing started");
+    var count = manifestFactory(directives);
+    console.log(`manifest contains ${count} operational directives`);
+    console.log("processing completed");
+};
 
-console.log("processing completed");
+// it all starts here
+process();

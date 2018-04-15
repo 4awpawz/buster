@@ -1,0 +1,25 @@
+html, body {
+    font-size: 100%;
+    line-height: 1.5;
+}
+body {
+    margin: 0;
+    height: 100vh;
+}
+* {
+    box-sizing: border-box;
+}
+.page-title {
+    font-size: 1.2rem;
+}
+.bgi {
+    width: 100vw;
+    height: 100vh;
+    background-image: url("alphabet-arts-and-crafts-blog-459688.jpg");
+    background-size: cover;
+    background-origin: border-box;
+    background-clip: border-box;
+    background-color: green;
+    background-position: center center;
+    background-clip: border-box;
+}

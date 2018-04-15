@@ -20,10 +20,10 @@
 
 1. where fp = path to a file. It can be a full path or it can be relative to the current directory.
 
-1.  where :1 = operational directive to copy the file using a hash based file name.
+1.  where :1 = operational directive to create a copy of the file using a hash based file name.
 
-1. where :2 = operational directive to 
+1. where :2 = operational directive to search the content of the file and change all references to file names within the file to their corresponding hashed file names.
 
-1. where :3 = operational directive to perform both operational directive :1 and operational directive  :2.   
+1. where :3 = operational directive to perform both operational directive :1 and operational directive :2.   
 
 1. where dp = target path for a processed file. It can be a full path or it can be relative to the current directory.
