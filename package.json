@@ -1,0 +1,24 @@
+{
+  "name": "@jeffreyschwartz/buster",
+  "version": "1.0.0",
+  "description": "## features 1. generate cache busting files using hashed file names and their backups with their original names 2. modify file content, replacing references to original file names with hashed file names 3. scriptable, config file, package.json and cli supported 4. non blocking",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "file-exists": "^5.0.1",
+    "md5-file": "^4.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1"
+  }
+}
