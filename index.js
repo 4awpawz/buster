@@ -9,9 +9,16 @@ const directives = [
     "test-project/css/test.css:3:test-project"
 ];
 
+const config = {
+    directives: directives,
+    options: {
+        manifestFileName: "./manifest.json"
+    }
+};
+
 const process = () => {
     console.log("processing started");
-    manifestFactory()(directives);
+    manifestFactory()(config.directives, config.options);
     console.log("processing completed");
 };
 
