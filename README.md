@@ -23,7 +23,7 @@ example of an operational directive:
 
 1. `buster` is the name of the module to be called.
 
-1. -f - indicates a list of operational directives follow.The list must be enclosed in either single or double quotes. 
+1. -f - indicates that a list of comma separated operational directives follow. The list must be enclosed in either single or double quotes. 
 
 1. fp - the path, including the file's name and extension (if it has one), to the file buster will copy. It can be a full or relative path.
 
@@ -35,8 +35,8 @@ example of an operational directive:
 
 1. dp - the path where buster will save the copied file to. It can be a full or relative path.
 
-### buster.json
-
 ### package.json
+
+### buster.json
 
 ## options
