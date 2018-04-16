@@ -25,7 +25,7 @@ example of an operational directive:
 
 1. -f - indicates that a list of comma separated operational directives follow. The list must be enclosed in either single or double quotes. 
 
-1. fp - the path, including the file's name and extension (if it has one), to the file buster will copy. It can be a full or relative path.
+1. fp - the path, including the file's name and extension (if it has one), to the file buster will copy. It can be a absolute or relative path.
 
 1. :1: - is the operational directive that instructs buster to create a copy of the file using a hash based file name.
 
@@ -33,7 +33,7 @@ example of an operational directive:
 
 1. :3: - is the operational directive that instructs buster to perform both operational directive :1: and operational directive :2:.   
 
-1. dp - the path where buster will save the copied file to. It can be a full or relative path.
+1. dp - the path where buster will save the copied file to. It can be a absolute or relative path.
 
 ### package.json
 
