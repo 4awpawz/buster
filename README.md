@@ -31,7 +31,7 @@ example of an operational directive:
 
 1. :2: - is the  operational directive that instructs buster to create a copy of the file and to search the copied file's content, replacing all references to file names that have corresponding hash based file names. A backup of the orignal file is saved with a file name of [original file name].buster-copy.[original file extension] (e.g. `index.html` will be saved as `index.buster-copy.html`).
 
-1. :3: - is the operational directive that instructs buster to perform both operational directive :1 and operational directive :2.   
+1. :3: - is the operational directive that instructs buster to perform both operational directive :1: and operational directive :2:.   
 
 1. dp - the path where buster will save the copied file to. It can be a full or relative path.
 
