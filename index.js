@@ -12,7 +12,9 @@ const directives = [
 const config = {
     directives: directives,
     options: {
-        manifestFileName: "./manifest.json"
+        saveManifest: true,
+        manifestFile: "./manifest.json",
+        restore: false
     }
 };
 
