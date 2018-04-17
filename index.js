@@ -1,4 +1,3 @@
-const fs = require("fs");
 const manifestFactory = require("./lib/manifest");
 
 // a mock for a config, a package.json hash or command line arguments
@@ -12,9 +11,12 @@ const directives = [
 const config = {
     directives: directives,
     options: {
-        saveManifest: true,
-        manifestFile: "./manifest.json",
-        restore: false
+        // where to save the manifest, defaults to cwd
+        manifestDest: "./manifest.json",
+        // rename backup files  and delete generated hash files
+        restore: true,
+        // dry run only
+        dryRun: false
     }
 };
 
