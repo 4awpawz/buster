@@ -14,7 +14,7 @@ buster can fix your browser file cache problems
 buster is very easy to configure because it uses a concept called *Operational Directives*, which define the actions buster takes for each file it touches:
 
 example of an operational directive:
->`'./meow.jpg:1:./media/'` instructs buster to create a copy of the file ./meow.jpg using a hash based file name and to save the file to ./media/. If it makes it easier to reason about, think of an operational directive as input | process | output.
+>`'./meow.jpg:1:./media/'` instructs buster to create a copy of the file ./meow.jpg using a hash based file name and to save the file to ./media/. If it makes it easier to reason about, think of an operational directive as input > process > output.
 
 ### cli
 
