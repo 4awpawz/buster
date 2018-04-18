@@ -14,7 +14,7 @@ const config = {
         // where to save the manifest, defaults to cwd
         manifestDest: "./manifest.json",
         // rename backup files  and delete generated hash files
-        restore: false,
+        restore: true,
         // dry run only
         dryRun: false
     }
