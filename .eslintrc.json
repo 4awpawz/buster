@@ -4,6 +4,7 @@
         "semi": ["error", "always"],
         "quotes": ["error", "double"],
         "eol-last": "off",
-        "indent": ["error", 4]
+        "indent": ["error", 4],
+        "no-mixed-operators": "off"
     }
 }

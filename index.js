@@ -1,6 +1,5 @@
-const path = require("path");
+const config = require("./lib/config");
 const manifestFactory = require("./lib/manifest");
-const userPkgJson = require(path.join(process.cwd(), "package.json"));
 
 // a mock for a config, a package.json hash or command line arguments
 // const directives = [
@@ -25,13 +24,13 @@ const userPkgJson = require(path.join(process.cwd(), "package.json"));
 //     }
 // };
 
-const processBuster = (userPkgJson) => {
+const processBuster = () => {
     console.log("processing started");
+    var userConfig = config();
     // manifestFactory()(config.directives, config.options);
-    manifestFactory()(userPkgJson.buster.directives, userPkgJson.buster.options);
+    manifestFactory()(userConfig.directives, userConfig.options);
     console.log("processing completed");
 };
 
 // it all starts here
-console.log(userPkgJson);
-processBuster(userPkgJson);
+processBuster();
