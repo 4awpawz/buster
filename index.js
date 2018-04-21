@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const config = require("./lib/config");
 const manifestFactory = require("./lib/manifest");
 
