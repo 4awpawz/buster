@@ -18,7 +18,7 @@ example of an operational directive:
 
 ### cli
 
->$> buster -f 'fp:1:dp, fp:2:dp, fp:3:dp, ...'
+>$ buster -f 'fp:1:dp, fp:2:dp, fp:3:dp, ...'
 
 1. `buster` is the name of the module to be called.
 
@@ -36,6 +36,6 @@ example of an operational directive:
 
 ### package.json
 
-### buster.json
+### .buster.json
 
 ## options
