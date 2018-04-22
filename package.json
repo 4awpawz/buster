@@ -1,6 +1,6 @@
 {
   "name": "@jeffreyschwartz/buster",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "## features 1. generate cache busting files using hashed file names and their backups with their original names 2. modify file content, replacing references to original file names with hashed file names 3. scriptable, config file, package.json and cli supported 4. non blocking",
   "main": "index.js",
   "scripts": {
