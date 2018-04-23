@@ -27,7 +27,9 @@ The above is an example of an operational directive that directs Buster to *crea
 
 ## configuration
 
-Buster builds its runtime configuration, which consists of options and operational directives, from configuration data passed to it from the *command line* as well as from configuration data it finds in either *.buster.json* or *package.json*, respectively. .buster.json takes *priority* over package.json.
+Buster builds its runtime configuration, which consists of options and operational directives, from configuration data passed to it from the *command line* as well as from configuration data it finds in either *.buster.json* or *package.json*, respectively.
+
+>__Important__ command line configurations takes *priority* over .buster.json configuration; .buster.json configurations takes *priority* over package.json configuration.
 
 ### command line
 
@@ -74,8 +76,11 @@ __example__ running Buster from the command line:
 
 ## options
 Buster supports the following options:
-1. restore: *'-r' or '--restore*' from the command line; *"'restore':[boolean]"* from within a config file.
-2. manifest: *'-m [path]' or '--manifest [path]'*  from the command line; *"'manifest':[path]"* from within a config file.
+1. restore: *'-r' or '--restore*' from the command line; *"'restore':[boolean]"* from within .buster.json and package.json.
+2. manifest: *'-m [path]' or '--manifest [path]'*  from the command line; *"'manifest':[path]"* from within a .bust.json and package.json.
+
+## restore
+Buster can restore your files to their original state if you provide -r/--restore option on the command line or the "restore" key in .buster.json or package.json. See [opitons](#options) above for details.
 
 ## manifest
 Buster can generate and save a manifest file if you provide the -m/--manifest option on the command line or the "manifest" key in .buster.json or package.json. See [options](#options) above for details.
@@ -114,6 +119,8 @@ __sample__ generated manifest file
     ]
 }
 ```
+## author's recommended use of configuration
+tbd
 
 ## to dos
 1. synchronous processing
