@@ -47,7 +47,7 @@ __example__ running Buster from the command line:
 "buster": {
     "options: {
         "manifest": "./manifest.json"
-    }
+    },
     "directives": [
         "media/meow.jpg:1:media",
         "./index.html:2:.",
@@ -62,7 +62,7 @@ __example__ running Buster from the command line:
 {
     "options: {
         "manifest": "./manifest.json"
-    }
+    },
     "directives": [
         "media/meow.jpg:1:media",
         "./index.html:2:.",
