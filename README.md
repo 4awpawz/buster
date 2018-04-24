@@ -81,7 +81,7 @@ Buster supports the following options:
 Buster can restore your files to their original state if you include the *-r* or *--restore* option on the command line or the *"restore: [true or false]"* key/value pair in either .buster.json or package.json. __*Important*__ you must provide the same list of operational directives that was used when you ran Buster without the *restore* option.
 
 ### manifest
-Buster can generate and save a manifest file if you provide the -m/--manifest option on the command line or the "manifest: [true or false]" key/value pair in .buster.json or package.json.
+Buster can generate and save a manifest file if you provide the *-m/--manifest* option on the command line or the *"manifest: [true or false]"* key/value pair in .buster.json or package.json.
 
 __sample__ generated manifest file
 ```
