@@ -35,7 +35,7 @@ Buster builds its runtime configuration, which consists of options and operation
 
 __running Buster from the command line__:
 
->$ buster [options] '[od[,...]]'
+    >$ buster [options] '[od[,...]]'
 
 In the above, *buster* is the *command* to be called followed by an optional list of *options* (see [options](#options) for details) followed by an optional list of *ods* (comma separated; no spaces).
 
@@ -78,7 +78,9 @@ __example__ running Buster from the command line:
 Buster supports the following options:
 
 ### restore
-Buster can restore your files to their original state if you include the *-r* or *--restore* option on the command line or the *"restore: [true or false]"* key/value pair in either .buster.json or package.json. __*Important*__ you must provide the same list of operational directives that was used when you ran Buster without the *restore* option.
+Buster can restore your files to their original state if you include the *-r* or *--restore* option on the command line or the *"restore: [true or false]"* key/value pair in either .buster.json or package.json.
+
+>__*Important*__ you must provide the same list of operational directives that was used when you ran Buster without the *restore* option.
 
 ### manifest
 Buster can generate and save a manifest file if you provide the *-m/--manifest* option on the command line or the *"manifest: [true or false]"* key/value pair in .buster.json or package.json.
