@@ -28,7 +28,14 @@ const manifestFactory = require("./lib/manifest");
 
 const processBuster = () => {
     console.log("processing started");
-    var userConfig = config();
+    const userConfig = config();
+
+    if (!userConfig) {
+        console.log("no valid configuration found");
+        console.log("terminating process");
+        process.exit();
+    }
+
     // manifestFactory()(config.directives, config.options);
     manifestFactory()(userConfig.directives, userConfig.options);
     console.log("processing completed");
