@@ -78,10 +78,10 @@ __example__ running Buster from the command line:
 Buster supports the following options:
 
 ### restore
-Buster can restore your files to their original state if you include the *-r* or *--restore* option on the command line or the *"restore: [true or false]"* key/value pair in either .buster.json or package.json.
+Buster can restore your files to their original state if you include the *-r* or *--restore* option on the command line or the *"restore: [true or false]"* key/value pair in either .buster.json or package.json. __*Important*__ you must provide the same list of operational directives that was used when you ran Buster without the *restore* option.
 
 ### manifest
-Buster can generate and save a manifest file if you provide the -m/--manifest option on the command line or the "manifest: [true or false]" key/value pair in .buster.json or package.json. See [options](#options) above for details.
+Buster can generate and save a manifest file if you provide the -m/--manifest option on the command line or the "manifest: [true or false]" key/value pair in .buster.json or package.json.
 
 __sample__ generated manifest file
 ```
@@ -138,7 +138,7 @@ The following psudo code describes the process Buster uses to construct its runt
         then use { ...commandLineConfig, ...packageJsonConfig }
     else termminate processing
     
-As the above psudo code demonstrates, Buster builds its runtime configuration by "blending" the complete configuration data it receives with the configuration data it recieves, if any,from the command line.
+As the above psudo code demonstrates, Buster can *"blend"* the complete configuration data it receives with the configuration data it recieves, if any, from the command line.
 
 This affords a flexible means to manage your Buster configuration, using a combination of both the command line along with either of the two configuration files, .buster.json and package.json.
 
