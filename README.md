@@ -1,4 +1,4 @@
-# a cache buster called Buster
+# a cache buster called *Buster*
 Buster can fix your browser file cache problems
 
 ## features
@@ -8,9 +8,9 @@ Buster can fix your browser file cache problems
 1. Buster can be configured using the command line, *.butster.json*, or *package.json*
 
 ## installation
->npm install @jeffreyschwartz/Buster --save-dev
+>npm install @jeffreyschwartz/buster --save-dev
 
-## operational directives - ods
+## operational directives
 Buster uses a concept called *Operational Directives* to direct the operation it performs for a given file. Each operational directive is comprised of 3 parts, as in *'input:operation:output'*:
 1. input - the path to a file to operate on
 2. operation - a number, surrounded by colons (i.e. ":"), in the range of 1 to 3, which is used to indicate the operation that Buster is to perform on the file identified by item 1 above. This number can be one of the following:
@@ -37,18 +37,18 @@ __running Buster from the command line__:
 
 >$ buster [options] '[od[,...]]'
 
-In the above, *Buster* is the *command* to be called followed by an optional list of *options* (see [options](#options) for details) followed by an optional list of *ods* (comma separated; no spaces).
+In the above, *buster* is the *command* to be called followed by an optional list of *options* (see [options](#options) for details) followed by an optional list of *ods* (comma separated; no spaces).
 
 __example__ running Buster from the command line:
   
->buster -m ./manifest.json media/meow.jpg:1:media/,./index.html:2:.,css/style.scss:3:css
+>buster -d ./manifest.json media/meow.jpg:1:media/,./index.html:2:.,css/style.scss:3:css
 
 
 ### package.json
-```json
+```
 "buster": {
     "options: {
-        "manifest": "./manifest.json"
+        "manifest": true
     },
     "directives": [
         "media/meow.jpg:1:media",
@@ -60,10 +60,10 @@ __example__ running Buster from the command line:
 ```
 
 ### .buster.json
-```json
+```
 {
     "options: {
-        "manifest": "./manifest.json"
+        "manifest": true
     },
     "directives": [
         "media/meow.jpg:1:media",
@@ -76,17 +76,15 @@ __example__ running Buster from the command line:
 
 ## options
 Buster supports the following options:
-1. restore: *'-r' or '--restore*' from the command line; *"'restore':[boolean]"* from within .buster.json and package.json.
-2. manifest: *'-m [path]' or '--manifest [path]'*  from the command line; *"'manifest':[path]"* from within a .bust.json and package.json.
 
-## restore
-Buster can restore your files to their original state if you provide -r/--restore option on the command line or the "restore" key in .buster.json or package.json. See [opitons](#options) above for details.
+### restore
+Buster can restore your files to their original state if you include the *-r* or *--restore* option on the command line or the *"restore: [true or false]"* key/value pair in either .buster.json or package.json.
 
-## manifest
-Buster can generate and save a manifest file if you provide the -m/--manifest option on the command line or the "manifest" key in .buster.json or package.json. See [options](#options) above for details.
- 
+### manifest
+Buster can generate and save a manifest file if you provide the -m/--manifest option on the command line or the "manifest: [true or false]" key/value pair in .buster.json or package.json. See [options](#options) above for details.
+
 __sample__ generated manifest file
-```json
+```
 {
     "manifest": [
         {
@@ -119,8 +117,67 @@ __sample__ generated manifest file
     ]
 }
 ```
-## author's recommended use of configuration
-tbd
+
+## how Buster determines its runtime configuration
+Buster prioritizes its sources of configuration data as follows:
+1. from the command line
+2. from .buster.json
+3. from package.json
+
+Buster attempts to find configuration data from all three of the above. For each one it finds, Buster attempts to validate it and then determines if that source's data is complete. If it is determined that it is complete, Buster uses it in its runtime configuration.
+
+To determine if the configuration data from any particular source is complete, Buster checks if the source supplies a list of [operational directives](#operational-directives). If it does, Buster will use that source to construct its runtime configuration.
+
+The following psudo code describes the process Buster uses to construct its runtime configuration:
+
+    if commandLineConfig is supplied and is complete 
+        then use commandLineConfig
+    else if busterConfig is supplied and is complete
+        then use { ...commandLineConfig, ...busterConfig }
+    else if packageJsonConfig is supplied and is complete
+        then use { ...commandLineConfig, ...packageJsonConfig }
+    else termminate processing
+    
+As the above psudo code demonstrates, Buster builds its runtime configuration by "blending" the complete configuration data it receives with the configuration data it recieves, if any,from the command line.
+
+This affords a flexible means to manage your Buster configuration, using a combination of both the command line along with either of the two configuration files, .buster.json and package.json.
+
+## author's prefered approach to configuring Buster
+
+I personally find JSON based configuration easier to author and maintain than command line configuration. Taking advantage of Buster's *blending* of configuration data to arrive at its runtime configuration, I use the command line in conjustion with .buster.json and/or package.json.
+
+As an example, when working with NPM based projects, I will create two NPM tasks:
+
+    "bust": "buster -m"
+
+and
+
+    "restore": "buster -r"
+
+I will also place my configuration data, in this case operational directives only, in .buster.json.
+```
+{
+    "directives": [
+        "media/alphabet-arts-and-crafts-blog-459688-worked.jpg:1:media",
+        "media/black-and-white-close-up-cobweb-worked.jpg:1:media",
+        "media/cyclone-roller-coaster-coney-island-worked.jpg:1:media",
+        "media/tatoo-handshake-worked.jpg:1:media",
+        "./index.html:2:.",
+        "css/test.css:3:css",
+        "script/test.js:3:script"
+    ]
+}
+```
+
+Now, when I want to run Buster to cache bust my project, I merely have to type the following at the commnd line
+
+    npm run bust
+
+and when I want to clean/restore my project, I merely have to type the following at the command line
+
+    npm run restore
+
+
 
 ## to dos
 1. synchronous processing
