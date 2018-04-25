@@ -1,14 +1,38 @@
 {
   "name": "@jeffreyschwartz/buster",
   "version": "0.0.1",
-  "description": "## features 1. generate cache busting files using hashed file names and their backups with their original names 2. modify file content, replacing references to original file names with hashed file names 3. scriptable, config file, package.json and cli supported 4. non blocking",
+  "description": "A configurable cache buster called Buster. Buster will fix your browser file cache problems.",
+  "keywords": [
+    "browser",
+    "cache",
+    "buster",
+    "cachebuster",
+    "cache buster",
+    "cache busting",
+    "manifest",
+    "fingerprint",
+    "fingerprinting",
+    "revision",
+    "revisioning",
+    "workflow",
+    "webdev",
+    "web development"
+  ],
+  "homepage": "https://github.com/jeffschwartz/buster",
+  "bugs": {
+    "url": "https://github.com/jeffschwartz/buster/issues",
+    "email": "havewebforhire@gmail.com"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Jeffrey Schwartz",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeffschwartz/buster"
+  },
+  "license": "MIT",
   "dependencies": {
     "commander": "^2.15.1",
     "file-exists": "^5.0.1",
