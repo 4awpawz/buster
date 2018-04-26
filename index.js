@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 const configFactory = require("./lib/config");
 const manifestFactory = require("./lib/manifest");
 
@@ -19,5 +17,4 @@ const processBuster = () => {
     console.log("processing completed");
 };
 
-// it all starts here
-processBuster();
+module.exports = processBuster;

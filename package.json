@@ -48,6 +48,6 @@
     "eslint-plugin-standard": "^3.0.1"
   },
   "bin": {
-    "buster": "./index.js"
+    "buster": "./cli.js"
   }
 }
