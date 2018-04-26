@@ -6,13 +6,13 @@ Buster can fix your browser file cache problems
 1. Buster can also search your files, looking for references to files by their original file names, and replaces those references with their corresponding MD5 hash-based file names
 1. Buster can optionally save a manifest to a file called *manifest.json*
 1. Buster can be configured using the command line, *.butster.json*, or *package.json*
-1. Buster can be called programatically
+1. Buster can be called and configured programatically
 
 ## installation
 >npm install @jeffreyschwartz/buster
 
 ## operational directives
-Buster uses a concept called *Operational Directives* to direct the operation it performs for a given file. Each operational directive is comprised of 3 parts, as in *'input:operation:output'*:
+Buster uses a concept called *Operational Directives*, abreviated ods, to direct the operation it performs for a given file. Each operational directive is comprised of 3 parts, as in *'input:operation:output'*:
 1. input - the path to a file to operate on
 2. operation - a number, surrounded by colons (i.e. ":"), in the range of 1 to 3, which is used to indicate the operation that Buster is to perform on the file identified by item 1 above. This number can be one of the following:
     * :1: - Instructs Buster to create a copy of the input file using a hash-based file name. The resulting hash-based file name will be *[original file name].[some hash value].[original file type]*.
@@ -28,35 +28,19 @@ The above is an example of an operational directive that directs Buster to *crea
 
 ## configuration
 
-Buster builds its runtime configuration, which consists of [options](#options) and [operational directives](#operational-directives), from configuration data passed to it from the *command line* as well as from configuration data it receives from *parameters passed to it directly from another program*, or from *.buster.json* or from configuration data it finds in *package.json*.
+Buster builds its runtime configuration, which consists of [options](#options) and [operational directives](#operational-directives), from configuration data passed to it from the [command line](#command-line) as well as from configuration data it receives from [another program](#calling-buster-programatically), or from [.buster.json](#.buster.json) or from configuration data it finds in [package.json](#package.json).
 
 ### command line
 
 __running Buster from the command line__:
 
-    >$ buster [options] '[od[,...]]'
+    >$buster [options] '[od[,...]]'
 
 In the above, *buster* is the *command* to be called followed by an optional list of *options* (see [options](#options) for details) followed by an optional list of *ods* (comma separated; no spaces).
 
 __example__ running Buster from the command line:
   
->buster -d ./manifest.json media/meow.jpg:1:media/,./index.html:2:.,css/style.scss:3:css
-
-
-### package.json
-```
-"buster": {
-    "options: {
-        "manifest": true
-    },
-    "directives": [
-        "media/meow.jpg:1:media",
-        "./index.html:2:.",
-        "css/test.css:3:css",
-        "script/test.js:3:script"
-    ]
-}
-```
+>\>$buster -d ./manifest.json media/meow.jpg:1:media/,./index.html:2:.,css/style.scss:3:css
 
 ### .buster.json
 ```
@@ -73,16 +57,39 @@ __example__ running Buster from the command line:
 }
 ```
 
+### package.json
+```
+"buster": {
+    "options: {
+        "manifest": true
+    },
+    "directives": [
+        "media/meow.jpg:1:media",
+        "./index.html:2:.",
+        "css/test.css:3:css",
+        "script/test.js:3:script"
+    ]
+}
+```
+
 ## options
 Buster supports the following options:
 
 ### restore
-Buster can restore your files to their original state if you include the *-r* or *--restore* option on the command line or the *"restore: [true or false]"* key/value pair in either .buster.json or package.json.
+The restore option instructs Buster to restore your files to their original state.
 
->__*Important*__ you must provide the same list of operational directives that was used when you ran Buster without the *restore* option.
+From the command line, include the *-r/--restore* option.
+
+From within .buster.json, package.json and when calling from another program, include the *"restore: [true or false]"* key/value pair.
+
+>__*Important*__ in order for restore to work, you must provide the same list of operational directives that was used when you ran Buster without the *restore* option.
 
 ### manifest
-Buster can generate and save a manifest file if you provide the *-m/--manifest* option on the command line or the *"manifest: [true or false]"* key/value pair in .buster.json or package.json.
+Buster can generate and save a manifest file, named manifest.json.
+
+From the command line, include the *-m/--manifest* option.
+
+From within .buster.json, package.json and when calling from another program, include the *"manifest: [true or false]"* key/value pair.
 
 __sample__ generated manifest file
 ```
@@ -120,36 +127,34 @@ __sample__ generated manifest file
 ```
 
 ## how Buster determines its runtime configuration
-Buster prioritizes its sources of configuration data as follows:
-1. from the command line
-1. from params passed to Buster programatically [see calling Buster programatically](#calling-buster-programatically)
-1. from .buster.json
-1. from package.json
 
-Buster attempts to find configuration data from all 4 of the above. For each one it finds, Buster attempts to validate it and then determines if that source's data is complete. If it is determined that it is complete, Buster uses it in its runtime configuration.
+Buster attempts to read configuration data from the command line, from params passed to it from another program. from .buster.json and from within package.json. For each source it finds, Buster attempts to validate its data and then determines if that source's data is complete. If the data is valid and it is complete, then Buster build its runtime configuration from it.
 
-To determine if the configuration data from any particular source is complete, Buster checks if the source supplies a list of [operational directives](#operational-directives). If it does, Buster will use that source to construct its runtime configuration.
+>Buster considers a source's data to be complete if it contains a list of [operational directives](#operational-directives).
 
 The following psudo code describes the process Buster uses to construct its runtime configuration:
 
     if commandLineConfig is supplied and is complete 
         then use commandLineConfig
-    else if paramsConfig is supplied and is complete
+    else if paramsConfig is supplied
+    and { ...commandLineConfig, ...paramsConfig } is complete
         then use { ...commandLineConfig, ...paramsConfig }
-    else if busterConfig is supplied and is complete
+    else if busterConfig is supplied
+    and { ...commandLineConfig, ...busterConfig } is complete
         then use { ...commandLineConfig, ...busterConfig }
-    else if packageJsonConfig is supplied and is complete
+    else if packageJsonConfig is supplied
+    and { ...commandLineConfig, ...packageJsonConfig } is complete
         then use { ...commandLineConfig, ...packageJsonConfig }
     else termminate processing
     
-This affords a flexible means to manage your Buster configuration:
+This *blending* of configuration data affords a lot of flexibility for managing your Buster configurations:
 
 * using command line configuration data solely if it is complete
 * or when combined with and complete with any one of the other sources of configuration data
 
 ## author's prefered approach to configuring Buster
 
-I personally find JSON based configuration easier to author and maintain than command line configuration. Taking advantage of Buster's *blending* of configuration data to arrive at its runtime configuration, I use the command line in conjustion with .buster.json and/or package.json.
+I personally find JSON based configuration easier to author and maintain than command line configuration. Taking advantage of Buster's *blending* of configuration data to arrive at its runtime configuration, I use the command line in conjunction with the other possible sources of configuration data.
 
 As an example, when working with NPM based projects, I will create two NPM tasks:
 
@@ -210,4 +215,4 @@ buster(paramsConfig);
 ## to dos
 1. synchronous processing
 1. glob support with excludes
-1. scriptability
+1. scriptability &check;
