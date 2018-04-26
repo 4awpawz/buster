@@ -1,8 +1,8 @@
 const configFactory = require("./lib/config");
 const manifestFactory = require("./lib/manifest");
 
-const processBuster = (configParams = {}) => {
-    const config = configFactory(configParams);
+const processBuster = (paramsConfig = {}) => {
+    const config = configFactory(paramsConfig);
 
     console.log("processing started");
 
