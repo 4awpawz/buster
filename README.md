@@ -4,11 +4,12 @@ Buster can fix your browser file cache problems
 ## features
 1. Buster copies your files using MD5 hash-based file names and if required makes backups of them encorporating their original file name and file type
 1. Buster can also search your files, looking for references to files by their original file names, and replaces those references with their corresponding MD5 hash-based file names
-1. Buster can optionally save its manifest to a file in JSON format 
+1. Buster can optionally save a manifest to a file called *manifest.json*
 1. Buster can be configured using the command line, *.butster.json*, or *package.json*
+1. Buster can be called programatically
 
 ## installation
->npm install @jeffreyschwartz/buster --save-dev
+>npm install @jeffreyschwartz/buster
 
 ## operational directives
 Buster uses a concept called *Operational Directives* to direct the operation it performs for a given file. Each operational directive is comprised of 3 parts, as in *'input:operation:output'*:
@@ -27,9 +28,7 @@ The above is an example of an operational directive that directs Buster to *crea
 
 ## configuration
 
-Buster builds its runtime configuration, which consists of options and operational directives, from configuration data passed to it from the *command line* as well as from configuration data it finds in either *.buster.json* or *package.json*, respectively.
-
->__Important__ command line configurations takes *priority* over .buster.json configuration; .buster.json configurations takes *priority* over package.json configuration.
+Buster builds its runtime configuration, which consists of [options](#options) and [operational directives](#operational-directives), from configuration data passed to it from the *command line* as well as from configuration data it receives from *parameters passed to it directly from another program*, or from *.buster.json* or from configuration data it finds in *package.json*.
 
 ### command line
 
@@ -123,10 +122,11 @@ __sample__ generated manifest file
 ## how Buster determines its runtime configuration
 Buster prioritizes its sources of configuration data as follows:
 1. from the command line
-2. from .buster.json
-3. from package.json
+1. from params passed to Buster programatically [see calling Buster programatically](#calling-buster-programatically)
+1. from .buster.json
+1. from package.json
 
-Buster attempts to find configuration data from all three of the above. For each one it finds, Buster attempts to validate it and then determines if that source's data is complete. If it is determined that it is complete, Buster uses it in its runtime configuration.
+Buster attempts to find configuration data from all 4 of the above. For each one it finds, Buster attempts to validate it and then determines if that source's data is complete. If it is determined that it is complete, Buster uses it in its runtime configuration.
 
 To determine if the configuration data from any particular source is complete, Buster checks if the source supplies a list of [operational directives](#operational-directives). If it does, Buster will use that source to construct its runtime configuration.
 
@@ -134,15 +134,18 @@ The following psudo code describes the process Buster uses to construct its runt
 
     if commandLineConfig is supplied and is complete 
         then use commandLineConfig
+    else if paramsConfig is supplied and is complete
+        then use { ...commandLineConfig, ...paramsConfig }
     else if busterConfig is supplied and is complete
         then use { ...commandLineConfig, ...busterConfig }
     else if packageJsonConfig is supplied and is complete
         then use { ...commandLineConfig, ...packageJsonConfig }
     else termminate processing
     
-As the above psudo code demonstrates, Buster can *"blend"* the complete configuration data it receives with the configuration data it recieves, if any, from the command line.
+This affords a flexible means to manage your Buster configuration:
 
-This affords a flexible means to manage your Buster configuration, using a combination of both the command line along with either of the two configuration files, .buster.json and package.json.
+* using command line configuration data solely if it is complete
+* or when combined with and complete with any one of the other sources of configuration data
 
 ## author's prefered approach to configuring Buster
 
@@ -179,7 +182,30 @@ and when I want to clean/restore my project, I merely have to type the following
 
     npm run restore
 
+## calling Buster programatically
+Buster can be called programatically, allowing it to be used as part of a greater workflow:
 
+```
+const buster = require("@jeffreyschwartz/buster");
+
+const paramsConfig = {
+    options: {
+        manifest: true,
+        restore: false
+    },
+    directives: [
+        "media/alphabet-arts-and-crafts-blog-459688-worked.jpg:1:media",
+        "media/black-and-white-close-up-cobweb-worked.jpg:1:media",
+        "media/cyclone-roller-coaster-coney-island-worked.jpg:1:media",
+        "media/tatoo-handshake-worked.jpg:1:media",
+        "./index.html:2:.",
+        "css/test.css:3:css",
+        "script/test.js:3:script"
+    ]
+}
+
+buster(paramsConfig);
+```
 
 ## to dos
 1. synchronous processing
