@@ -213,6 +213,6 @@ buster(paramsConfig);
 ```
 
 ## to dos
-1. synchronous processing
+1. asynchronous processing
 1. glob support with excludes
 1. scriptability &check;
