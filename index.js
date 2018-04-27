@@ -1,8 +1,8 @@
 const configFactory = require("./lib/config");
 const manifestFactory = require("./lib/manifest");
 
-const processBuster = (paramsConfig = {}) => {
-    const config = configFactory(paramsConfig);
+const processBuster = async (paramsConfig = {}) => {
+    const config = await configFactory(paramsConfig);
 
     console.log("processing started");
 
