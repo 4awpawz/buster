@@ -9,7 +9,11 @@ Buster can fix your browser file cache problems
 1. Buster can be called and configured programatically
 
 ## installation
->npm install @jeffreyschwartz/buster
+    # installing locally
+    npm install --save-dev @jeffreyschwartz/buster
+    
+    # installing globally
+    npm install -g @jeffreyschwartz/buster
 
 ## operational directives
 Buster uses a concept called *Operational Directives*, abreviated ods, to direct the operation it performs for a given file. Each operational directive is comprised of 3 parts, as in *'input:operation:output'*:
@@ -130,7 +134,7 @@ __sample__ generated manifest file
 
 Buster attempts to read configuration data from the command line, from params passed to it from another program. from .buster.json and from within package.json. For each source it finds, Buster attempts to validate its data and then determines if that source's data is complete. If the data is valid and it is complete, then Buster build its runtime configuration from it.
 
->Buster considers a source's data to be complete if it contains a list of [operational directives](#operational-directives).
+> *Important* Buster considers a source's data to be complete if it contains a list of [operational directives](#operational-directives).
 
 The following psudo code describes the process Buster uses to construct its runtime configuration:
 
@@ -213,6 +217,6 @@ buster(paramsConfig);
 ```
 
 ## to dos
-1. asynchronous processing
-1. glob support with excludes
-1. scriptability &check;
+1. scriptability - targeting release 0.1.0 - &check;
+1. asynchronous processing - targeting release 0.1.0 - &check;
+1. glob support with excludes - targeting release 0.2.0

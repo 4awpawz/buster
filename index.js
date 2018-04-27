@@ -12,7 +12,7 @@ const processBuster = async (paramsConfig = {}) => {
         process.exit();
     }
 
-    manifestFactory()(config.directives, config.options);
+    await manifestFactory()(config.directives, config.options);
 
     console.log("processing completed");
 };
