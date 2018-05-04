@@ -2,11 +2,11 @@
 Buster fixes your browser file cache problems
 
 ## features
-1. Buster can coppy your files using MD5 hash-based file names and if required makes backups of them encorporating their original file names
+1. Buster can copy your files using MD5 hash-based file names and if required makes backups of them incorporating their original file names
 1. Buster can search your files, looking for references to files by their original file names, and replaces those references with their corresponding MD5 hash-based file names
 1. Buster can optionally save a manifest to a file called *manifest.json*
-1. Buster can be configured using the command line, *.butster.json*, or *package.json*
-1. Buster can be called and configured programatically
+1. Buster can be configured using the command line, *.buster.json*, or *package.json*
+1. Buster can be called and configured programmatically
 
 ## installation
     # installing locally
@@ -16,11 +16,11 @@ Buster fixes your browser file cache problems
     npm install -g @4awpawz/buster
 
 ## operational directives
-Buster uses a concept called *Operational Directives*, abreviated *ods*, to direct the operation it performs for a given file. Each operational directive is comprised of 3 parts, as in *'input:operation:output'*:
+Buster uses a concept called *Operational Directives*, abbreviated *ods*, to direct the operation it performs for a given file. Each operational directive is comprised of 3 parts, as in *'input:operation:output'*:
 1. input - the path to a file to operate on
 2. operation - a number, surrounded by colons (i.e. ":"), in the range of 1 to 3, which is used to indicate the operation that Buster is to perform on the file identified by item 1 above. This number can be one of the following:
     * :1: - Instructs Buster to create a copy of the input file using a hash-based file name. The resulting hash-based file name will be *[original file name].[some hash value].[original file type]*.
-    * :2: - Instructs Buster to create a copy of the input file and to search the copied file's content, replacing all references to file names with their corresponding hash-based file names. A backup of the orignal file is saved with a file name of *[original file name].buster-copy.[original file type]* (e.g. `index.html` will be saved as `index.buster-copy.html`).
+    * :2: - Instructs Buster to create a copy of the input file and to search the copied file's content, replacing all references to file names with their corresponding hash-based file names. A backup of the original file is saved with a file name of *[original file name].buster-copy.[original file type]* (e.g. `index.html` will be saved as `index.buster-copy.html`).
     * :3: - Instructs Buster to create a copy of the input file using a hash-based file name and to search the copied file's content, replacing all references to file names with their corresponding hash-based file names. The resulting hash-based file name will be *[original file name].[some hash value].[original file type]*.
 3. output - the path to where the operation's output (a file) is to be saved
 
@@ -32,7 +32,7 @@ The above is an example of an operational directive that directs Buster to *crea
 
 ## configuration
 
-Buster builds its runtime configuration, which consists of [options](#options) and [operational directives](#operational-directives), from configuration data passed to it from the [command line](#command-line) as well as from configuration data it receives from [another program](#calling-buster-programatically), or from [.buster.json](#.buster.json) or from configuration data it finds in [package.json](#package.json).
+Buster builds its runtime configuration, which consists of [options](#options) and [operational directives](#operational-directives), from configuration data passed to it from the [command line](#command-line) as well as from configuration data it receives from [another program](#calling-buster-programmatically), or from [.buster.json](#.buster.json) or from configuration data it finds in [package.json](#package.json).
 
 ### command line configuration
 
@@ -138,7 +138,7 @@ Buster attempts to read configuration data from the *command line*, from *params
 
 > *Important* Buster considers a source's data to be complete if it contains a list of [operational directives](#operational-directives).
 
-The following psudo code describes the process Buster uses to construct its runtime configuration:
+The following pseudo code describes the process Buster uses to construct its runtime configuration:
 
     if commandLineConfig is supplied and is complete 
         then use commandLineConfig
@@ -151,14 +151,14 @@ The following psudo code describes the process Buster uses to construct its runt
     else if packageJsonConfig is supplied
     and { ...commandLineConfig, ...packageJsonConfig } is complete
         then use { ...commandLineConfig, ...packageJsonConfig }
-    else termminate processing
+    else terminate processing
     
 This *blending* of configuration data affords a lot of flexibility for managing your Buster configurations:
 
 * using command line configuration data solely if it is complete
 * or when combined with any one of the other sources of configuration data
 
-## author's prefered approach to configuring Buster
+## author's preferred approach to configuring Buster
 
 I personally find JSON based configuration easier to author and maintain than command line configuration. Taking advantage of Buster's *blending* of configuration data to arrive at its runtime configuration, I use the command line in conjunction with the other possible sources of configuration data.
 
@@ -185,7 +185,7 @@ I also place my configuration data, in this case operational directives only, in
 }
 ```
 
-When I want to run Buster to cache bust my project, I run the following at the commnd line:
+When I want to run Buster to cache bust my project, I run the following at the command line:
 
     npm run bust
 
@@ -193,8 +193,8 @@ When I want Buster to clean/restore my project, I run the following at the comma
 
     npm run restore
 
-## calling Buster programatically
-Buster can be called programatically, allowing it to be used as part of a greater workflow:
+## calling Buster programmatically
+Buster can be called programmatically, allowing it to be used as part of a greater workflow:
 
 ```
 const buster = require("@4awpawz/buster");
@@ -217,10 +217,10 @@ const paramsConfig = {
 
 buster(paramsConfig);
 ```
-## fileing bugs and feature requests
+## filing bugs and feature requests
 * https://github.com/4awpawz/buster/issues
 
 ## to dos
-1. scriptability - targeting release 0.1.0 - &check;
+1. scriptable - targeting release 0.1.0 - &check;
 1. non blocking/asynchronous processing - targeting release 0.1.0 - &check;
 1. glob support with excludes - will target release 0.2.0 if there are significant requests for this
