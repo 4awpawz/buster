@@ -132,7 +132,7 @@ __sample__ generated manifest file
 
 ## how Buster determines its runtime configuration
 
-Buster attempts to read configuration data from the command line, from params passed to it from another program. from .buster.json and from within package.json. For each source it finds, Buster attempts to validate its data and then determines if that source's data is complete. If the data is valid and it is complete, then Buster build its runtime configuration from it.
+Buster attempts to read configuration data from the *command line*, from *params passed to it from another program*, from *.buster.json* and from within *package.json*. For each source it finds, Buster attempts to validate its data and then determines if that source's data is *complete*. If the data is valid and it is complete, then Buster builds its runtime configuration from it.
 
 > *Important* Buster considers a source's data to be complete if it contains a list of [operational directives](#operational-directives).
 
@@ -154,7 +154,7 @@ The following psudo code describes the process Buster uses to construct its runt
 This *blending* of configuration data affords a lot of flexibility for managing your Buster configurations:
 
 * using command line configuration data solely if it is complete
-* or when combined with and complete with any one of the other sources of configuration data
+* or when combined with any one of the other sources of configuration data
 
 ## author's prefered approach to configuring Buster
 
@@ -218,5 +218,5 @@ buster(paramsConfig);
 
 ## to dos
 1. scriptability - targeting release 0.1.0 - &check;
-1. asynchronous processing - targeting release 0.1.0 - &check;
-1. glob support with excludes - targeting release 0.2.0
+1. non blocking/asynchronous processing - targeting release 0.1.0 - &check;
+1. glob support with excludes - will target release 0.2.0 if there are significant requests for this
