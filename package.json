@@ -1,5 +1,5 @@
 {
-  "name": "@jeffreyschwartz/buster",
+  "name": "@4awpawz/buster",
   "version": "0.0.1",
   "description": "A configurable cache buster called Buster. Buster will fix your browser file cache problems.",
   "keywords": [
@@ -18,10 +18,10 @@
     "webdev",
     "web development"
   ],
-  "homepage": "https://github.com/jeffschwartz/buster",
+  "homepage": "https://github.com/4awpawz/buster/#readme",
   "bugs": {
-    "url": "https://github.com/jeffschwartz/buster/issues",
-    "email": "havewebforhire@gmail.com"
+    "url": "https://github.com/4awpawz/buster/issues",
+    "email": "4awpawz@gmail.com"
   },
   "main": "index.js",
   "scripts": {
@@ -30,7 +30,7 @@
   "author": "Jeffrey Schwartz",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jeffschwartz/buster"
+    "url": "https://github.com/4awpawz/buster"
   },
   "license": "MIT",
   "dependencies": {
