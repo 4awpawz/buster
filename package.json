@@ -36,6 +36,7 @@
   "dependencies": {
     "commander": "^2.15.1",
     "file-exists": "^5.0.1",
+    "glob": "^7.1.2",
     "md5-file": "^4.0.0",
     "replace-in-file": "^3.4.0"
   },
