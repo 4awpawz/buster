@@ -3,10 +3,18 @@ Buster fixes your browser file cache problems
 
 ## features
 1. Buster can copy your files using MD5 hash-based file names and if required makes backups of them incorporating their original file names
+
 1. Buster can search your files, looking for references to files by their original file names, and replaces those references with their corresponding MD5 hash-based file names
+
 1. Buster can optionally save a manifest to a file called *manifest.json*
-1. Buster can be configured using the command line, *.buster.json*, or *package.json*
-1. Buster can be called and configured programmatically
+
+1. Buster can optionally *restore* your files to their original state
+
+1. Buster can be configured using the *command line*, *.buster.json*, and *package.json*
+
+1. Buster supports *globs and excludes*
+
+1. Buster can be called and configured *programmatically*
 
 ## installation
     # installing locally
@@ -17,18 +25,30 @@ Buster fixes your browser file cache problems
 
 ## operational directives
 Buster uses a concept called *Operational Directives*, abbreviated *ods*, to direct the operation it performs for a given file. Each operational directive is comprised of 3 parts, as in *'input:operation:output'*:
-1. input - the path to a file to operate on
-2. operation - a number, surrounded by colons (i.e. ":"), in the range of 1 to 3, which is used to indicate the operation that Buster is to perform on the file identified by item 1 above. This number can be one of the following:
-    * :1: - Instructs Buster to create a copy of the input file using a hash-based file name. The resulting hash-based file name will be *[original file name].[some hash value].[original file type]*.
-    * :2: - Instructs Buster to create a copy of the input file and to search the copied file's content, replacing all references to file names with their corresponding hash-based file names. A backup of the original file is saved with a file name of *[original file name].buster-copy.[original file type]* (e.g. `index.html` will be saved as `index.buster-copy.html`).
-    * :3: - Instructs Buster to create a copy of the input file using a hash-based file name and to search the copied file's content, replacing all references to file names with their corresponding hash-based file names. The resulting hash-based file name will be *[original file name].[some hash value].[original file type]*.
-3. output - the path to where the operation's output (a file) is to be saved
+
+1. input - a full or relative path to one or more files. Supports *globs*.
+
+2. operation - a number, enclosed by colons (e.g. ":1:"), in the range of 1 to 3, which is used to indicate the operation that Buster is to perform on the file(s) identified by item 1 above. This number can be one of the following:
+
+    * :1: - Instructs Buster to create a copy of each input file using MD5 hash-based file names. The resulting hash-based file name(s) will be *[original file name].[some hash value].[original file type]*.
+
+    * :2: - Instructs Buster to search each input file's content, replacing all references to file names with their corresponding hash-based file names. A backup of each original file is saved with a file name of *[original file name].buster-copy.[original file type]* (e.g. `./index.html` will be saved as `./index.buster-copy.html`).
+
+    * :3: - Instructs Buster to create a copy of each input file using a hash-based file name and to search each copied file's content, replacing all references to file names with their corresponding hash-based file names. The resulting hash-based file name will be *[original file name].[some hash value].[original file type]*.
+
+3. output - a full or relative path to where the files output by the operation are to be saved.
 
 __example__ of an operational directive:
 
 >`'media/meow.jpg:1:./media'`
 
 The above is an example of an operational directive that directs Buster to *create a copy* of the input file, *media/meow.jpg*, using a hash-based file name and to save the file to *./media*.
+
+__example__ of an operational directive with glob input:
+
+>`'media/*.jpg:1:./media'`
+
+The above is an example of an operational directive with glob input that directs Buster to *create a copy* of each input file, *media/cat.jpg, media/meow.jpg, media/roar.jpg*, using a hash-based file name for each, and to save each file to *./media*.
 
 ## configuration
 
@@ -88,7 +108,7 @@ From the command line, include the *-r/--restore* option.
 
 From within .buster.json, package.json and when calling from another program, include the *"restore: [true or false]"* key/value pair.
 
->__*Important*__ in order for restore to work, you must provide the same list of operational directives that was used when you ran Buster without the *restore* option.
+>__*Important*__ for the *restore* option to work, you must provide the same list of operational directives used when you ran Buster without the *restore* option.
 
 ### manifest
 Buster can save a manifest file, named *manifest.json*, to the project's *root directory*.
@@ -221,6 +241,9 @@ buster(paramsConfig);
 * https://github.com/4awpawz/buster/issues
 
 ## to dos
-1. scriptable - targeting release 0.1.0 - &check;
-1. non blocking/asynchronous processing - targeting release 0.1.0 - &check;
-1. glob support with excludes - will target release 0.2.0 if there are significant requests for this
+1. ~~scriptable~~ - targeting release 0.1.0 - &check;
+1. ~~non blocking/asynchronous processing~~ - targeting release 0.1.0 - &check;
+1. ~~glob support with excludes~~ - targeting release 0.1.1.0 - &check;
+
+## license
+MIT
