@@ -4,7 +4,7 @@ const expandOds = require("./lib/ods");
 
 const processBuster = async (paramsConfig = {}) => {
     const config = await configFactory(paramsConfig);
-    const expandedOds = await expandOds(config.directives);
+    const expandedOds = await expandOds(config.directives, config.options.ignore);
 
     console.log("processing started");
 
