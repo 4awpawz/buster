@@ -247,7 +247,7 @@ buster(paramsConfig);
 ## to dos
 1. ~~scriptable~~ - targeting release 0.1.0 - &check;
 1. ~~non blocking/asynchronous processing~~ - targeting release 0.1.0 - &check;
-1. ~~glob support with excludes~~ - targeting release 0.1.1.0 - &check;
+1. ~~glob/ignore support~~ - targeting release 0.1.1.0 - &check;
 
 ## license
 MIT
