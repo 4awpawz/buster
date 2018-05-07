@@ -4,21 +4,11 @@ const expandOds = require("./lib/ods");
 
 const processBuster = async (paramsConfig = {}) => {
     const config = await configFactory(paramsConfig);
-    var expandedOds;
+    const expandedOds = await expandOds(config.directives);
 
     console.log("processing started");
 
-    if (!config) {
-        console.log("no valid configuration found");
-        console.log("terminating process");
-        process.exit();
-    }
-
-    expandedOds = await expandOds(config.directives);
-    console.log("expandedOds", expandedOds);
-
-    // await manifestFactory()(config.directives, config.options);
-    await manifestFactory()(expandedOds, config.options);
+    await manifestFactory(expandedOds, config.options);
 
     console.log("processing completed");
 };
