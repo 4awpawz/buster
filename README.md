@@ -50,6 +50,8 @@ __example__ of an operational directive with glob input:
 
 The above is an example of an operational directive with glob input that directs Buster to *create a copy* of each input file, *media/cat.jpg, media/meow.jpg, media/roar.jpg*, using a hash-based file name for each, and to save each file to *./media*.
 
+>__Important__ Buster implements its *glob* support using node package __glob__. Please refer to node package [*glob*](https://www.npmjs.com/package/glob) should you need additional information on using globs with Buster. 
+
 ## configuration
 
 Buster builds its runtime configuration, which consists of [options](#options) and [operational directives](#operational-directives), from configuration data passed to it from the [command line](#command-line) as well as from configuration data it receives from [another program](#calling-buster-programmatically), or from [.buster.json](#.buster.json) or from configuration data it finds in [package.json](#package.json).
@@ -74,7 +76,7 @@ __example__ running Buster from the command line:
         "manifest": true
     },
     "directives": [
-        "media/meow.jpg:1:media",
+        "media/*.jpg:1:media",
         "./index.html:2:.",
         "css/test.css:3:css",
         "script/test.js:3:script"
@@ -90,7 +92,7 @@ __example__ running Buster from the command line:
         "manifest": true
     },
     "directives": [
-        "media/meow.jpg:1:media",
+        "media/*.jpg:1:media",
         "./index.html:2:.",
         "css/test.css:3:css",
         "script/test.js:3:script"
@@ -101,14 +103,12 @@ __example__ running Buster from the command line:
 ## options
 Buster supports the following options:
 
-### restore
-The restore option instructs Buster to restore your files to their original state.
+### ignore
+Supply a comma separated list of one or more *paths to files* and Buster will ignore them. Supports *globs*.
 
-From the command line, include the *-r/--restore* option.
+From the command line, include the *-i/--ignore* option followed by a comma separated list of one ore more paths to files.
 
-From within .buster.json, package.json and when calling from another program, include the *"restore: [true or false]"* key/value pair.
-
->__*Important*__ for the *restore* option to work, you must provide the same list of operational directives used when you ran Buster without the *restore* option.
+From within .buster.json, package.json and when calling from another program, include the *"ignore: "path to file[, path to file]" *key/value* pair.
 
 ### manifest
 Buster can save a manifest file, named *manifest.json*, to the project's *root directory*.
@@ -151,6 +151,15 @@ __sample__ generated manifest file
     ]
 }
 ```
+
+### restore
+The restore option instructs Buster to restore your files to their original state.
+
+From the command line, include the *-r/--restore* option.
+
+From within .buster.json, package.json and when calling from another program, include the *"restore: [true or false]"* key/value pair.
+
+>__*Important*__ for the *restore* option to work, you must provide the same list of operational directives used when you ran Buster without the *restore* option.
 
 ## how Buster determines its runtime configuration
 
