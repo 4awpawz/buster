@@ -203,10 +203,7 @@ I also place my configuration data, in this case operational directives only, in
 ```
 {
     "directives": [
-        "media/alphabet-arts-and-crafts-blog-459688-worked.jpg:1:media",
-        "media/black-and-white-close-up-cobweb-worked.jpg:1:media",
-        "media/cyclone-roller-coaster-coney-island-worked.jpg:1:media",
-        "media/tatoo-handshake-worked.jpg:1:media",
+        "media/*.jpg:1:media",
         "./index.html:2:.",
         "css/test.css:3:css",
         "script/test.js:3:script"
@@ -234,10 +231,7 @@ const paramsConfig = {
         restore: false
     },
     directives: [
-        "media/alphabet-arts-and-crafts-blog-459688-worked.jpg:1:media",
-        "media/black-and-white-close-up-cobweb-worked.jpg:1:media",
-        "media/cyclone-roller-coaster-coney-island-worked.jpg:1:media",
-        "media/tatoo-handshake-worked.jpg:1:media",
+        "media/*.jpg:1:media",
         "./index.html:2:.",
         "css/test.css:3:css",
         "script/test.js:3:script"
@@ -246,6 +240,7 @@ const paramsConfig = {
 
 buster(paramsConfig);
 ```
+
 ## filing bugs and feature requests
 * https://github.com/4awpawz/buster/issues
 
