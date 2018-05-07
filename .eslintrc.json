@@ -5,6 +5,7 @@
         "quotes": ["error", "double"],
         "eol-last": "off",
         "indent": ["error", 4],
-        "no-mixed-operators": "off"
+        "no-mixed-operators": "off",
+        "no-throw-literal": "off"
     }
 }
