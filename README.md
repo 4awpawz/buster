@@ -40,15 +40,15 @@ Buster uses a concept called *Operational Directives*, abbreviated *ods*, to dir
 
 __example__ of an operational directive:
 
->`'media/meow.jpg:1:./media'`
+>`'media/meow.jpg:1:media'`
 
-The above is an example of an operational directive that directs Buster to *create a copy* of the input file, *media/meow.jpg*, using a hash-based file name and to save the file to *./media*.
+The above is an example of an operational directive that directs Buster to *create a copy* of the input file, *media/meow.jpg*, using a hash-based file name and to save the file to *media*.
 
 __example__ of an operational directive with glob input:
 
->`'media/*.jpg:1:./media'`
+>`'media/*.jpg:1:media'`
 
-The above is an example of an operational directive with glob input that directs Buster to *create a copy* of each input file, *media/cat.jpg, media/meow.jpg, media/roar.jpg*, using a hash-based file name for each, and to save each file to *./media*.
+The above is an example of an operational directive with glob input that directs Buster to *create a copy* of each input file, *media/cat.jpg, media/meow.jpg, media/roar.jpg*, using a hash-based file name for each, and to save each file to *media*.
 
 >__Important__ Buster implements its *glob* support using node package __glob__. Please refer to node package [*glob*](https://www.npmjs.com/package/glob) should you need additional information on using globs with Buster. 
 
@@ -111,7 +111,7 @@ From the command line, include the *-i/--ignore* option followed by a comma sepa
 From within .buster.json, package.json and when calling from another program, include the *"ignore: "path to file[, path to file]" *key/value* pair.
 
 ### manifest
-Buster can save a manifest file, named *manifest.json*, to the project's *root directory*.
+Buster can save its manifest to *manifest.json* in the project's *root directory*.
 
 From the command line, include the *-m/--manifest* option.
 
@@ -184,14 +184,14 @@ The following pseudo code describes the process Buster uses to construct its run
     
 This *blending* of configuration data affords a lot of flexibility for managing your Buster configurations:
 
-* using command line configuration data solely if it is complete
-* or when combined with any one of the other sources of configuration data
+* using command line configuration alone
+* using command line configuration in combination with any one of the other sources of configuration data
 
 ## author's preferred approach to configuring Buster
 
-I personally find JSON based configuration easier to author and maintain than command line configuration. Taking advantage of Buster's *blending* of configuration data to arrive at its runtime configuration, I use the command line in conjunction with the other possible sources of configuration data.
+I use the command line in conjunction with the other possible sources of configuration data.
 
-As an example, when working with NPM based projects, I create 2 NPM tasks:
+As an example, when working with Node projects, I create 2 NPM tasks:
 
     "bust": "buster -m"
 
@@ -213,11 +213,11 @@ I also place my configuration data, in this case operational directives only, in
 
 When I want to run Buster to cache bust my project, I run the following at the command line:
 
-    npm run bust
+    >$npm run bust
 
 When I want Buster to clean/restore my project, I run the following at the command line:
 
-    npm run restore
+    >$npm run restore
 
 ## calling Buster programmatically
 Buster can be called programmatically, allowing it to be used as part of a greater workflow:
