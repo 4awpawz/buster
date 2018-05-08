@@ -2,19 +2,19 @@
 Buster fixes your browser file cache problems
 
 ## features
-1. Buster can copy your files using MD5 hash-based file names and if required makes backups of them incorporating their original file names
 
-1. Buster can search your files, looking for references to files by their original file names, and replaces those references with their corresponding MD5 hash-based file names
+1. copies files you specify and names them using MD5 hash-based file names
 
-1. Buster can optionally save a manifest to a file called *manifest.json*
+1. searches the content of files you specify, looking for references to files by their original file names, and replaces those references with their corresponding MD5 hash-based file names
 
-1. Buster can optionally *restore* your files to their original state
+1. restores all files back to their original state (i.e. their original file names and their original content)
 
-1. Buster can be configured using the *command line*, *.buster.json*, and *package.json*
+1. generates and saves its manifest to a file named manifest.json
 
-1. Buster supports *globs and excludes*
+1. easy to configure using a combination of the command line, .buster.json, package.json and your own scripts
 
-1. Buster can be called and configured *programmatically*
+1. it's scriptable and easily integrates into your workflow and projects
+
 
 ## installation
     # installing locally
