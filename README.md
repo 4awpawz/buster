@@ -60,7 +60,7 @@ Buster builds its runtime configuration, which consists of [options](#options) a
 
 __running Buster from the command line__:
 
-    >$buster [options] '[od[,...]]'
+    >$buster [options] -d '[od[,...]]'
 
 In the above, *buster* is the *command* to be called followed by an optional list of *options* (see [options](#options) for details) followed by an optional list of *ods* (comma separated; no spaces).
 
