@@ -106,9 +106,9 @@ Buster supports the following options:
 ### ignore
 Supply a comma separated list of one or more *paths to files* and Buster will ignore them. Supports *globs*.
 
-From the command line, include the *-i/--ignore* option followed by a comma separated list of one ore more paths to files.
+From the command line, include the *-i/--ignore* option followed by a comma separated `"quoted"` list of one ore more paths to files.
 
-From within .buster.json, package.json and when calling from another program, include the *"ignore: "path to file[, path to file]" *key/value* pair.
+From within .buster.json, package.json and when calling from another program, include the *"ignore: "path to file[, path to file]"* key/value pair.
 
 ### manifest
 Buster can save its manifest to *manifest.json* in the project's *root directory*.
