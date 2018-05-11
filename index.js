@@ -8,7 +8,7 @@ const processBuster = async (paramsConfig = {}) => {
 
     console.log("processing started");
 
-    await manifestFactory(expandedOds, config.options);
+    await manifestFactory(config.command, expandedOds, config.options);
 
     console.log("processing completed");
 };
