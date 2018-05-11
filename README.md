@@ -58,9 +58,21 @@ Buster builds its runtime configuration, which consists of [options](#options) a
 
 ### command line configuration
 
-__running Buster from the command line__:
+    Usage: buster <bust | restore> [options] <ods ...>
 
-    >$buster [options] -d '[od[,...]]'
+__cache bust example__
+
+In the example below, the sub command *bust* directs Buster to cache bust the source files indicated in the 3 operational directives according to each operational directive's operation number. In addtion, the *-m* option directs Buster to generate and save the *manifest.json* file.
+
+    >$ buster bust -m media/meow.jpg:1:media/,./index.html:2:.,css/style.scss:3:css
+
+The example below demonstrates how to use globs in your operational directives.
+
+    >$ buster bust -m media/*.jpg:1:media/,./index.html:2:.,css/style.scss:3:css
+
+The example 
+
+    >$ buster bust -m -i "media/unrullycat.jpg" media/*.jpg:1:media/,./index.html:2:.,css/style.scss:3:css
 
 In the above, *buster* is the *command* to be called followed by an optional list of *options* (see [options](#options) for details) followed by an optional list of *ods* (comma separated; no spaces).
 
