@@ -262,4 +262,4 @@ buster(paramsConfig);
 1. ~~glob/ignore support~~ - targeting release 0.1.0 - &check;
 
 ## license
-MIT
+Copyright &copy; 2018 , `Jeffrey Schwartz`. Released under the `MIT license`.
