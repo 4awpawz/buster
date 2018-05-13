@@ -3,15 +3,15 @@ Buster fixes your browser file cache problems
 
 ## features
 
-1. makes copies of files using MD5 hash-based file names
+1. copies files and renames them with MD5 hash-based file names
 
-1. cache bust in place or target a different destination
+1. optionally copy files in place or target a different destination
 
-1. search files for references to their original file names and replace them with their MD5 hash-based file names
+1. replaces all referencesto to original files names with their MD5 hash-based file names
 
-1. option to save a list of all the files and operations taken to file manifest.json
+1. optionally generates a report to file manifest.json
 
-1. option to restore your project back to its original state
+1. optionaly restores your project back to its original state
 
 1. configuration options include the command line, .buster.json, package.json and your own scripts
 
@@ -263,6 +263,6 @@ buster(paramsConfig);
 1. ~~non blocking/asynchronous processing~~ - targeting release 0.1.0 - &check;
 1. ~~glob/ignore support~~ - targeting release 0.1.0 - &check;
 1. mirror source dir structure when destination path is different from source path - targeting release 0.1.0
-
+1. change manfiest name to buster.manifest.json - targeting release 0.1.0
 ## license
 Copyright &copy; 2018, `Jeffrey Schwartz`. Released under the `MIT license`.
