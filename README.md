@@ -262,7 +262,8 @@ buster(paramsConfig);
 1. ~~scriptable~~ - targeting release 0.1.0 - &check;
 1. ~~non blocking/asynchronous processing~~ - targeting release 0.1.0 - &check;
 1. ~~glob/ignore support~~ - targeting release 0.1.0 - &check;
-1. mirror source dir structure when destination path is different from source path - targeting release 0.1.0
-1. change manfiest name to buster.manifest.json - targeting release 0.1.0
+1. ~~mirror source dir structure when destination path is different from source path~~ - targeting release 0.1.0
+1. ~~change manfiest name to buster.manifest.json~~ - targeting release 0.1.0
+
 ## license
 Copyright &copy; 2018, `Jeffrey Schwartz`. Released under the `MIT license`.
