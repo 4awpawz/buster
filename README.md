@@ -49,7 +49,7 @@ The above directs Buster to copy the file *media/housecat.jpg* and to save it to
 The result of the above would be:
 
     media/
-    |    
+    |    | 
     |    housecat.jpg
     |    housecat.[unique hash name].jpg
 
