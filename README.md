@@ -49,8 +49,9 @@ The above directs Buster to copy the file *media/housecat.jpg* and to save it to
 The result of the above would be:
 
     media/
-        housecat.jpg
-        housecat.[unique hash name].jpg
+    |    
+    |    housecat.jpg
+    |    housecat.[unique hash name].jpg
 
 __example__ of an operational directive with glob input:
 
