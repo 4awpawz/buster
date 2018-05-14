@@ -1,19 +1,19 @@
 # a cache buster called *Buster*
-Buster fixes your browser file cache problems
+Buster busts your browser cache problems
 
 ## features
 
-1. copies files and renames them with MD5 hash-based file names
+1. MD5 hash-based file names
 
-1. optionally copy files in place or target a different destination
+1. cache bust in place or a different target
 
-1. replaces all referencesto to original files names with their MD5 hash-based file names
+1. replaces references found in files to original files names with their MD5 hash-based file names
 
-1. optionally generates a report to file manifest.json
+1. outputs a manifest to manifest.json
 
-1. optionaly restores your project back to its original state
+1. restores your project back to its original state
 
-1. configuration options include the command line, .buster.json, package.json and your own scripts
+1. configurable with the command line, .buster.json, package.json and your own scripts
 
 1. scriptable and easily integrates into your projects and workflow
 
@@ -28,7 +28,7 @@ Buster fixes your browser file cache problems
 ## operational directives
 Buster uses a concept called *Operational Directives*, abbreviated *ods*, to direct the operation it performs for a given file. Each operational directive is comprised of 3 parts, as in *'input:operation:output'*:
 
-1. input - a full or relative path to one or more files. Supports *globs*.
+1. input - a full or relative path to one or more files. Supports *globs/wildcard* characters.
 
 2. operation - a number, enclosed by colons (e.g. ":1:"), in the range of 1 to 3, which is used to indicate the operation that Buster is to perform on the file(s) identified by item 1 above. This number can be one of the following:
 
@@ -38,19 +38,48 @@ Buster uses a concept called *Operational Directives*, abbreviated *ods*, to dir
 
     * :3: - Instructs Buster to create a copy of each input file using a hash-based file name and to search each copied file's content, replacing all references to file names with their corresponding hash-based file names. The resulting hash-based file name will be *[original file name].[some hash value].[original file type]*.
 
-3. output - a full or relative path to where the files output by the operation are to be saved.
+3. output - a full or relative path to where the files output by the operation are to be saved. Supports *globs/wildcard* characters.
 
 __example__ of an operational directive:
 
 >`'media/meow.jpg:1:media'`
 
-The above is an example of an operational directive that directs Buster to *create a copy* of the input file, *media/meow.jpg*, using a hash-based file name and to save the file to *media*.
+The above directs Buster to copy the file *media/housecat.jpg* and to save it to the *media* folder. 
+
+The result of the above would be:
+
+    media/
+        housecat.jpg
+        housecat.[unique hash name].jpg
 
 __example__ of an operational directive with glob input:
 
->`'media/*.jpg:1:media'`
+>`'media/**/*.jpg:1:staging/media'`
 
-The above is an example of an operational directive with glob input that directs Buster to *create a copy* of each input file, *media/cat.jpg, media/meow.jpg, media/roar.jpg*, using a hash-based file name for each, and to save each file to *media*.
+The above directs Buster to recursively traverse all files and folders starting from in the *media* folder and to copy each file that matches the *`*.jpg`* pattern to the *staging/media* folder, creating their respective parent sub folders if they don't already exist.
+
+>__Important__ If a file's target folder doesn't exist, Buster will create it.
+
+The result of the above would be:
+
+    staging/    <-- 
+    |    |
+    |    media/    <-- 
+    |        |
+    |        housecat.[unique hash name].jpg
+    |        purringcat.[unique hash name].jpg
+    |        bigcats/    <--
+    |            |
+    |            lion.[unique hash name].jpg
+    |            tiger.[unique hash name].jpg
+    media/
+    |    |
+    |    housecat.jpg
+    |    purringcat.jpg
+    |    bigcats/
+    |        |
+    |        lion.jpg
+    |        tiger.jpg
 
 >__Important__ Buster implements its *glob* support using node package __glob__. Please refer to node package [*glob*](https://www.npmjs.com/package/glob) should you need additional information on using globs with Buster. 
 
