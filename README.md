@@ -50,10 +50,10 @@ The above directs Buster to save a copy of *media/meow.jpg* to the *media* folde
 
 The result of the above would be:
 
-    - media/
+    |- media/
     |    | 
-    |    - housecat.jpg
-    |    - housecat.[unique hash name].jpg
+    |    |- housecat.jpg
+    |    |- housecat.[unique hash name].jpg
 
 __example__ operational directive using a glob:
 
@@ -66,24 +66,24 @@ The above directs Buster to recursively traverse all files and folders, starting
 
 The result of the above would be:
 
-    - staging/    <-- created
+    |- staging/    <-- created
     |    |
-    |    - media/    <-- created
+    |    |- media/    <-- created
     |        |
-    |        - housecat.[unique hash name].jpg
-    |        - purringcat.[unique hash name].jpg
-    |        - bigcats/    <-- created
+    |        |- housecat.[unique hash name].jpg
+    |        |- purringcat.[unique hash name].jpg
+    |        |- bigcats/    <-- created
     |            |
-    |            - lion.[unique hash name].jpg
-    |            - tiger.[unique hash name].jpg
-    - media/
+    |            |- lion.[unique hash name].jpg
+    |            |- tiger.[unique hash name].jpg
+    |- media/
     |    |
-    |    - housecat.jpg
-    |    - purringcat.jpg
-    |    - bigcats/
+    |    |- housecat.jpg
+    |    |- purringcat.jpg
+    |    |- bigcats/
     |        |
-    |        - lion.jpg
-    |        - tiger.jpg
+    |        |- lion.jpg
+    |        |- tiger.jpg
 
 >__Important__ Buster implements its *glob* support using node package __glob__. Please refer to node package [*glob*](https://www.npmjs.com/package/glob) should you need additional information on using globs with Buster. 
 
@@ -439,13 +439,13 @@ buster(paramsConfig);
 * https://github.com/4awpawz/buster/issues
 
 ## to dos
-1. ~~scriptable~~ - targeting release 0.1.0 - &check;
-1. ~~non blocking/asynchronous processing~~ - targeting release 0.1.0 - &check;
-1. ~~glob/ignore support~~ - targeting release 0.1.0 - &check;
-1. ~~mirror source dir structure when destination path is different from source path~~ - targeting release 0.1.0 - &check;
-1. ~~change manifest name to buster.manifest.json~~ - targeting release 0.1.0 - &check;
-1. ~~verbose log option; default = false~~ - targeting release 0.1.0 - &check;
-1. readme (this file) - targeting release 0.1.0
+1. ~~scriptable~~ - targeting release v0.1.0 - &check;
+1. ~~non blocking/asynchronous processing~~ - targeting release v0.1.0 - &check;
+1. ~~glob/ignore support~~ - targeting release v0.1.0 - &check;
+1. ~~mirror source dir structure when destination path is different from source path~~ - targeting release v0.1.0 - &check;
+1. ~~change manifest name to buster.manifest.json~~ - targeting release v0.1.0 - &check;
+1. ~~verbose log option; default = false~~ - targeting release v0.1.0 - &check;
+1. ~~readme (this file)~~ - targeting release v0.1.0 - &check;
 
 ## license
 Copyright &copy; 2018, `Jeffrey Schwartz`. Released under the `MIT license`.
