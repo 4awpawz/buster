@@ -88,7 +88,7 @@ The result of the above would be:
 
 ## configuration
 
-Buster builds its runtime configuration from the [sub commands](#sub-commands), [options](#options) and [operational directives](#operational-directives) it gets from the [command line](#command-line), from [another program](#calling-buster-programmatically), from [.buster.json](#.buster.json) or from [package.json](#package.json).
+Buster builds its runtime configuration from the [sub commands](#sub-commands), [options](#options) and [operational directives](#operational-directives) it gets from the [command line](#command-line-configuration), from [another program](#calling-buster-programmatically), from [.buster.json](#.buster.json-configuration) or from [package.json](#package.json-configuration).
 
 ## sub commands
 Buster has 2 sub commands:
@@ -101,7 +101,7 @@ Commands Buster to cache bust the files identified by the operational directives
 ### restore
 `buster restore [options] <ods>`
 
-Restores the project back to its *original state* .
+Restores the project back to its *original state*.
 
 >__*Important*__ for *restore* to work, you must provide the same *ignored option files list* and the same *operational directives list* used to run the *bust* command.
 
