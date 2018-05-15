@@ -174,7 +174,7 @@ __sample__  buster.manifest.json file:
 ### verbose
 `buster <sub command> [-v|--verbose] <ods>`
 
-Provides detailed loging
+Provides detailed logging
 
 ## command line configuration
 
@@ -443,7 +443,7 @@ buster(paramsConfig);
 1. ~~non blocking/asynchronous processing~~ - targeting release 0.1.0 - &check;
 1. ~~glob/ignore support~~ - targeting release 0.1.0 - &check;
 1. ~~mirror source dir structure when destination path is different from source path~~ - targeting release 0.1.0 - &check;
-1. ~~change manfiest name to buster.manifest.json~~ - targeting release 0.1.0 - &check;
+1. ~~change manifest name to buster.manifest.json~~ - targeting release 0.1.0 - &check;
 1. ~~verbose log option; default = false~~ - targeting release 0.1.0 - &check;
 1. readme (this file) - targeting release 0.1.0
 
