@@ -3,17 +3,17 @@ Buster busts your browser cache problems
 
 ## features
 
-1. MD5 hash-based file names
+1. renames files using MD5 hash-based cache busting file names
 
-1. cache bust in place or a different target
+1. cache bust in place or target a different folder
 
-1. replaces references found in files to original files names with their MD5 hash-based file names
+1. replaces references in files to original files names with their MD5 hash-based file names
 
 1. outputs a manifest to manifest.json
 
-1. restores your project back to its original state
+1. can restore your project back to its original state
 
-1. configurable with the command line, .buster.json, package.json and your own scripts
+1. configurable via the command line, .buster.json, package.json and your own scripts
 
 1. scriptable and easily integrates into your projects and workflow
 
@@ -26,11 +26,11 @@ Buster busts your browser cache problems
     npm install -g @4awpawz/buster
 
 ## operational directives
-Buster uses a concept called *Operational Directives*, abbreviated *ods*, to direct the operation it performs for a given file. Each operational directive is comprised of 3 parts, as in *'input:operation:output'*:
+Buster employs a concept called *Operational Directives*, abbreviated *ods*, to direct the operations it performs on files. Each operational directive is comprised of 3 parts, as in *'input:operation:output'*:
 
-1. input - an absolute or relative path to one or more files. Supports *globs/wildcard* patterns.
+1. input - a relative path to one or more files. Supports *globs/wildcard* patterns.
 
-2. operation - a number, enclosed by colons (e.g. ":1:"), in the range of 1 to 3, which is used to indicate the operation that Buster is to perform on the file(s) identified by item 1 above. This number can be one of the following:
+2. operation - a number, surrounded by colons (e.g. ":1:"), in the range of 1 to 3, which is used to indicate the set of *actions* that Buster performs on the file(s) identified by item 1 above. The following 3 operations are currently supported:
 
     * :1: - Instructs Buster to create a copy of each input file using MD5 hash-based file names. The copied file's name will be *[original file name].[some hash value].[original file type]* (e.g. `cat.[some hash value].jpg`).
 
@@ -38,7 +38,7 @@ Buster uses a concept called *Operational Directives*, abbreviated *ods*, to dir
 
     * :3: - Instructs Buster to create a copy of each input file using a hash-based file name and to search each copied file's content, replacing all references to file names with their corresponding hash-based file names. The copied file's hash-based file name will be *[original file name].[some hash value].[original file type]* (e.g. `app.[some hash value].js`).
 
-3. output - an absolute or relative path to where the output of the operation is to be saved. Supports *globs/wildcard* patterns.
+3. output - a relative path to where the output of the operation is to be saved. Supports *globs/wildcard* patterns.
 
 >__Important__ Buster assumes that all relative paths are relative to `process.cwd()`.
 
@@ -50,10 +50,10 @@ The above directs Buster to copy the file *media/housecat.jpg* and to save it to
 
 The result of the above would be:
 
-    media/
+    - media/
     |    | 
-    |    housecat.jpg
-    |    housecat.[unique hash name].jpg
+    |    - housecat.jpg
+    |    - housecat.[unique hash name].jpg
 
 __example__ of an operational directive using a glob:
 
@@ -65,24 +65,24 @@ The above directs Buster to recursively traverse all files and folders starting 
 
 The result of the above would be:
 
-    staging/    <-- 
+    - staging/    <-- 
     |    |
-    |    media/    <-- 
+    |    - media/    <-- 
     |        |
-    |        housecat.[unique hash name].jpg
-    |        purringcat.[unique hash name].jpg
-    |        bigcats/    <--
+    |        - housecat.[unique hash name].jpg
+    |        - purringcat.[unique hash name].jpg
+    |        - bigcats/    <--
     |            |
-    |            lion.[unique hash name].jpg
-    |            tiger.[unique hash name].jpg
-    media/
+    |            - lion.[unique hash name].jpg
+    |            - tiger.[unique hash name].jpg
+    - media/
     |    |
-    |    housecat.jpg
-    |    purringcat.jpg
-    |    bigcats/
+    |    - housecat.jpg
+    |    - purringcat.jpg
+    |    - bigcats/
     |        |
-    |        lion.jpg
-    |        tiger.jpg
+    |        - lion.jpg
+    |        - tiger.jpg
 
 >__Important__ Buster implements its *glob* support using node package __glob__. Please refer to node package [*glob*](https://www.npmjs.com/package/glob) should you need additional information on using globs with Buster. 
 
@@ -165,8 +165,6 @@ Provides detailed loging
 At the command line type `buster -h`:
 
 ![screen shot 2018-05-15 at 9 22 19 am](https://user-images.githubusercontent.com/271288/40059607-74ecf2d8-5822-11e8-8d26-32d63c7849ff.png)
-
-
 
 __examples:__
 
