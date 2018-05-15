@@ -162,8 +162,10 @@ Provides detailed loging
 
 ## command line configuration
 
-    Usage: buster <bust|restore> [options] <ods ...>
-    ![Command Line Interface](https://github.com/4awpawz/static-assets/blob/master/buster/media/Screen%20Shot%202018-05-15%20at%207.57.53%20AM.png?raw=true "Command Line Interface")
+### At the command line type `buster -h`:
+
+![screen shot 2018-05-15 at 7 57 53 am](https://user-images.githubusercontent.com/271288/40057465-619b0086-581c-11e8-9d02-1f1e8d0cf001.png)
+
 
 __examples:__
 
