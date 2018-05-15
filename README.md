@@ -32,21 +32,21 @@ Buster employs a concept called *Operational Directives*, abbreviated *ods*, to 
 
 2. operation - a number, surrounded by colons (e.g. ":1:"), in the range of 1 to 3, which is used to indicate the set of *actions* that Buster performs on the file(s) identified by item 1 above. The following 3 operations are currently supported:
 
-    * :1: - Instructs Buster to create a copy of each input file using MD5 hash-based file names. The copied file's name will be *[original file name].[some hash value].[original file type]* (e.g. `cat.[some hash value].jpg`).
+    * :1: - Instructs Buster to create a copy of each input file using MD5 hash-based file names. The copied file's name will be *[original file name].[unique hash value].[original file type]* (e.g. `cat.[unique hash value].jpg`).
 
     * :2: - Instructs Buster to search each input file's content, replacing all references to file names with their corresponding hash-based file names. A backup of each input file is saved with a file name of *[original file name].buster-copy.[original file type]* (e.g. `./index.buster-copy.html`).
 
-    * :3: - Instructs Buster to create a copy of each input file using a hash-based file name and to search each copied file's content, replacing all references to file names with their corresponding hash-based file names. The copied file's hash-based file name will be *[original file name].[some hash value].[original file type]* (e.g. `app.[some hash value].js`).
+    * :3: - Instructs Buster to create a copy of each input file using a hash-based file name and to search each copied file's content, replacing all references to file names with their corresponding hash-based file names. The copied file's hash-based file name will be *[original file name].[unique hash value].[original file type]* (e.g. `app.[unique hash value].js`).
 
 3. output - a relative path to where the output of the operation is to be saved. Supports *globs/wildcard* patterns.
 
 >__Important__ Buster assumes that all relative paths are relative to `process.cwd()`.
 
-__example__ of an operational directive:
+__example__ operational directive:
 
     `media/meow.jpg:1:media`
 
-The above directs Buster to copy the file *media/housecat.jpg* and to save it to the *media* folder. 
+The above directs Buster to save a copy of *media/meow.jpg* to the *media* folder with a hash-based file name (i.e. *media/meow.[unique hash value].jpg*). 
 
 The result of the above would be:
 
@@ -55,23 +55,24 @@ The result of the above would be:
     |    - housecat.jpg
     |    - housecat.[unique hash name].jpg
 
-__example__ of an operational directive using a glob:
+__example__ operational directive using a glob:
 
     `media/**/*.jpg:1:staging/media`
 
-The above directs Buster to recursively traverse all files and folders starting from within the *media* folder and to copy each file that matches the *`*.jpg`* pattern to the *staging/media* folder.
+The above directs Buster to recursively traverse all files and folders, starting from within the *media* folder, and to save a copy of each file that matches the *`*.jpg`* pattern to the *staging/media* folder with a hash-based file name.
 
->__Important__ If a file's parent folder doesn't exist, Buster will create the folder first and then copy the file to it.
+
+>__Important__ When copying files, Buster will make folders and their parents if needed.
 
 The result of the above would be:
 
-    - staging/    <-- 
+    - staging/    <-- created
     |    |
-    |    - media/    <-- 
+    |    - media/    <-- created
     |        |
     |        - housecat.[unique hash name].jpg
     |        - purringcat.[unique hash name].jpg
-    |        - bigcats/    <--
+    |        - bigcats/    <-- created
     |            |
     |            - lion.[unique hash name].jpg
     |            - tiger.[unique hash name].jpg
@@ -118,7 +119,7 @@ Supports *globs* and *wildcard* characters patterns.
 ### manifest
 `buster <bust> [-m|--manifest]`
 
-Saves the manifest to *manifest.json* in the project's *root directory*.
+Saves the manifest to *manifest.json* in the project's *root folder*.
 
 __sample__  manifest.json file:
 ```
@@ -259,96 +260,84 @@ __examples:__
     ]
 }
 ```
->__*Important*__ Buster expects *.buster.json* to reside in your project's root directory, alongside package.json.
+>__*Important*__ Buster expects *.buster.json* to reside in your project's root folder, alongside package.json.
 
 ## package.json configuration
 
 __examples:__
 ```
 "buster": {
-    {
-        "command": "bust":,
-        "directives": [
-            "media/meow.jpg:1:media",
-            "./index.html:2:.",
-            "css/test.css:3:css",
-            "script/test.js:3:script"
-        ]
-    }
+    "command": "bust":,
+    "directives": [
+        "media/meow.jpg:1:media",
+        "./index.html:2:.",
+        "css/test.css:3:css",
+        "script/test.js:3:script"
+    ]
 }
 
 "buster": {
-    {
-        "command": "restore":,
-        "directives": [
-            "media/meow.jpg:1:media",
-            "./index.html:2:.",
-            "css/test.css:3:css",
-            "script/test.js:3:script"
-        ]
-    }
+    "command": "restore":,
+    "directives": [
+        "media/meow.jpg:1:media",
+        "./index.html:2:.",
+        "css/test.css:3:css",
+        "script/test.js:3:script"
+    ]
 }
 
 "buster": {
-    {
-        "command": "bust":,
-        "options": {
-            "manifest": true,
-            "verbose": true
-        },
-        "directives": [
-            "media/**/*.jpg:1:media",
-            "./index.html:2:.",
-            "css/test.css:3:css",
-            "script/test.js:3:script"
-        ]
-    }
+    "command": "bust":,
+    "options": {
+        "manifest": true,
+        "verbose": true
+    },
+    "directives": [
+        "media/**/*.jpg:1:media",
+        "./index.html:2:.",
+        "css/test.css:3:css",
+        "script/test.js:3:script"
+    ]
 }
 
 "buster": {
-    {
-        "command": "restore":,
-        "options": {
-            "verbose": true
-        },
-        "directives": [
-            "media/**/*.jpg:1:media",
-            "./index.html:2:.",
-            "css/test.css:3:css",
-            "script/test.js:3:script"
-        ]
-    }
+    "command": "restore":,
+    "options": {
+        "verbose": true
+    },
+    "directives": [
+        "media/**/*.jpg:1:media",
+        "./index.html:2:.",
+        "css/test.css:3:css",
+        "script/test.js:3:script"
+    ]
 }
 
 "buster": {
-    {
-        "command": "bust":,
-        "options": {
-            "manifest": true
-            "ignore": "media/original/**/*.jpg"
-        },
-        "directives": [
-            "media/**/*.jpg:1:staging/media",
-            "./index.html:2:staging",
-            "css/test.css:3:staging/css",
-            "script/test.js:3:staging/script"
-        ]
-    }
+    "command": "bust":,
+    "options": {
+        "manifest": true
+        "ignore": "media/original/**/*.jpg"
+    },
+    "directives": [
+        "media/**/*.jpg:1:staging/media",
+        "./index.html:2:staging",
+        "css/test.css:3:staging/css",
+        "script/test.js:3:staging/script"
+    ]
 }
 
 "buster": {
-    {
-        "command": "restore":,
-        "options": {
-            "ignore": "media/original/**/*.jpg"
-        },
-        "directives": [
-            "media/**/*.jpg:1:staging/media",
-            "./index.html:2:staging",
-            "css/test.css:3:staging/css",
-            "script/test.js:3:staging/script"
-        ]
-    }
+    "command": "restore":,
+    "options": {
+        "ignore": "media/original/**/*.jpg"
+    },
+    "directives": [
+        "media/**/*.jpg:1:staging/media",
+        "./index.html:2:staging",
+        "css/test.css:3:staging/css",
+        "script/test.js:3:staging/script"
+    ]
 }
 ```
 
