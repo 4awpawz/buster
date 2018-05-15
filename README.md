@@ -162,9 +162,10 @@ Provides detailed loging
 
 ## command line configuration
 
-### At the command line type `buster -h`:
+At the command line type `buster -h`:
 
-![screen shot 2018-05-15 at 7 57 53 am](https://user-images.githubusercontent.com/271288/40057465-619b0086-581c-11e8-9d02-1f1e8d0cf001.png)
+![screen shot 2018-05-15 at 9 22 19 am](https://user-images.githubusercontent.com/271288/40059607-74ecf2d8-5822-11e8-8d26-32d63c7849ff.png)
+
 
 
 __examples:__
