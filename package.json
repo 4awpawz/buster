@@ -1,7 +1,7 @@
 {
   "name": "@4awpawz/buster",
-  "version": "0.0.1",
-  "description": "A configurable cache buster called Buster. Buster will fix your browser file cache problems.",
+  "version": "0.1.0",
+  "description": "A configurable cache buster called Buster. Buster busts your browser cache problems.",
   "keywords": [
     "browser",
     "cache",
