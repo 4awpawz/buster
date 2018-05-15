@@ -163,7 +163,7 @@ Provides detailed loging
 ## command line configuration
 
     Usage: buster <bust|restore> [options] <ods ...>
-    ![Command Line Interface](https://github.com/4awpawz/static-assets/blob/master/buster/media/Screen%20Shot%202018-05-15%20at%207.57.53%20AM.png "Command Line Interface")
+    ![Command Line Interface](https://github.com/4awpawz/static-assets/blob/master/buster/media/Screen%20Shot%202018-05-15%20at%207.57.53%20AM.png?raw=true "Command Line Interface")
 
 __examples:__
 
