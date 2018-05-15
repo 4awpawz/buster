@@ -9,7 +9,7 @@ Buster busts your browser cache problems
 
 1. replaces references in files to original files names with their MD5 hash-based file names
 
-1. outputs a manifest to manifest.json
+1. outputs a manifest to buster.manifest.json
 
 1. can restore your project back to its original state
 
@@ -102,7 +102,7 @@ Commands Buster to cache bust the files identified by the operational directives
 ### restore
 `buster restore [options] <ods>`
 
-Restores the project back to its *original state*.
+Commands Buster to restore the project back to its *original state*.
 
 >__*Important*__ for *restore* to work, you must provide the same *ignored option files list* and the same *operational directives list* used to run the *bust* command.
 
@@ -119,38 +119,53 @@ Supports *globs* and *wildcard* characters patterns.
 ### manifest
 `buster <bust> [-m|--manifest]`
 
-Saves the manifest to *manifest.json* in the project's *root folder*.
+Saves the manifest to *buster.manifest.json* in the project's *root folder*.
 
-__sample__  manifest.json file:
+__sample__  buster.manifest.json file:
 ```
 {
     "manifest": [
         {
-            "source": "media/meow.jpg",
+            "source": "media/cyclone-roller-coaster-coney-island-worked.jpg",
             "operation": 1,
-            "dest": "media",
-            "hash": "d9c0594248cfc285a062f74146b12232",
-            "hashFileName": "media/meow.d9c0594248cfc285a062f74146b12232.jpg"
+            "dest": "staging/media",
+            "hashFileName": "cyclone-roller-coaster-coney-island-worked.0d5a7f4c21151797e98aa6cf76302f7f.jpg"
+        },
+        {
+            "source": "media/sub/alphabet-arts-and-crafts-blog-459688-worked.jpg",
+            "operation": 1,
+            "dest": "staging/media/sub",
+            "hashFileName": "alphabet-arts-and-crafts-blog-459688-worked.d9c0594248cfc285a062f74146b12232.jpg"
+        },
+        {
+            "source": "media/sub/black-and-white-close-up-cobweb-worked.jpg",
+            "operation": 1,
+            "dest": "staging/media/sub",
+            "hashFileName": "black-and-white-close-up-cobweb-worked.b10a846ff8428effe892c1f9b6a91680.jpg"
+        },
+        {
+            "source": "media/tatoo-handshake-worked.jpg",
+            "operation": 1,
+            "dest": "staging/media",
+            "hashFileName": "tatoo-handshake-worked.18267714b0e7f14d41e215354ddbf88a.jpg"
         },
         {
             "source": "./index.html",
             "operation": 2,
-            "dest": ".",
+            "dest": "staging",
             "backupFileName": "./index.buster-copy.html"
         },
         {
             "source": "css/test.css",
             "operation": 3,
-            "dest": "css",
-            "hash": "7ebc808154a564f44b82d4dea26c1246",
-            "hashFileName": "css/test.7ebc808154a564f44b82d4dea26c1246.css"
+            "dest": "staging/css",
+            "hashFileName": "test.8051095bd11b6e31145a8a3fd355d4c6.css"
         },
         {
             "source": "script/test.js",
             "operation": 3,
-            "dest": "script",
-            "hash": "48cdf598aba98f3d7d98d3703f394573",
-            "hashFileName": "script/test.48cdf598aba98f3d7d98d3703f394573.js"
+            "dest": "staging/script",
+            "hashFileName": "test.e6187d98b7362765c69015d34f010dd2.js"
         }
     ]
 }
