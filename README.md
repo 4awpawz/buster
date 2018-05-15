@@ -101,7 +101,7 @@ Commands Buster to cache bust the files identified by the operational directives
 ### restore
 `buster restore [options] <ods>`
 
-Restores the project back to its *original state* using files identified by the operational directive's input.
+Restores the project back to its *original state* .
 
 >__*Important*__ for *restore* to work, you must provide the same *ignored option files list* and the same *operational directives list* used to run the *bust* command.
 
