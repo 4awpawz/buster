@@ -88,7 +88,7 @@ The result of the above would be:
 
 ## configuration
 
-Buster builds its runtime configuration from the [sub commands](#sub-commands), [options](#options) and [operational directives](#operational-directives) it gets from the [command line](#command-line-configuration), from [another program](#calling-buster-programmatically), from [.buster.json](#.busterjson-configuration) or from [package.json](#packagejson-configuration).
+Buster builds its runtime configuration from the [sub commands](#sub-commands), [options](#options) and [operational directives](#operational-directives) it gets from the [command line](#command-line-configuration), from [another program](#calling-buster-programmatically), from [.buster.json](#busterjson-configuration) or from [package.json](#packagejson-configuration).
 
 ## sub commands
 Buster has 2 sub commands:
