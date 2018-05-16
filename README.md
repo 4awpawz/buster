@@ -44,7 +44,7 @@ Buster employs a concept called *Operational Directives*, abbreviated *ods*, to 
 
 __example__ operational directive:
 
-    `media/meow.jpg:1:media`
+    `media/housecat.jpg:1:media`
 
 The above directs Buster to save a copy of *media/meow.jpg* to the *media* folder with a hash-based file name (i.e. *media/meow.[unique hash value].jpg*). 
 
@@ -112,7 +112,7 @@ Buster supports the following options:
 ### ignore
 `buster <sub command> [-i|--ignore] <'path/to/file[,path/to/file,...]'> <ods>`
 
-Requires a list of one or more comma separated *paths to files* to ignore.
+Requires a *quoted* list of one or more comma separated *paths to files* to ignore.
 
 Supports *globs* and *wildcard* characters patterns.
 
