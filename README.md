@@ -1,7 +1,7 @@
-# a cache buster called *Buster*
+# A cache buster called *Buster*
 Buster busts your browser cache problems
 
-## features
+## Features
 
 1. renames files using MD5 hash-based cache busting file names
 
@@ -9,38 +9,65 @@ Buster busts your browser cache problems
 
 1. replaces references in files to original files names with their MD5 hash-based file names
 
-1. outputs a manifest to buster.manifest.json
+1. optionally outputs a manifest file to buster.manifest.json
 
 1. can restore your project back to its original state
 
-1. configurable via the command line, .buster.json, package.json and your own scripts
+1. intuitive configuration via the command line, .buster.json, and package.json
 
-1. scriptable and easily integrates into your projects and workflow
+1. scriptable
 
+1. integrates into your projects and workflows
 
-## installation
-    # installing locally
-    npm install --save-dev @4awpawz/buster
-    
+## Installation
     # installing globally
     npm install -g @4awpawz/buster
 
-## operational directives
-Buster employs a concept called *Operational Directives*, abbreviated *ods*, to direct the operations it performs on files. Each operational directive is comprised of 3 parts, as in *'input:operation:output'*:
+    # installing locally
+    npm install --save-dev @4awpawz/buster
+    
+## Operational directives
+Buster employs a concept called an *Operational Directive*, abbreviated *od*, which you *declare* in your configuration and which Buster uses to direct the operations it performs on your project's files. Each od is comprised of 3 parts, an [input](#input), an [operation](#operation), and an [output](#output).
 
-1. input - a relative path to one or more files. Supports *globs/wildcard* patterns.
+### Input
+A relative path to one or more files.
 
-2. operation - a number, surrounded by colons (e.g. ":1:"), in the range of 1 to 3, which is used to indicate the set of *actions* that Buster performs on the file(s) identified by item 1 above. The following 3 operations are currently supported:
-
-    * :1: - Instructs Buster to create a copy of each input file using MD5 hash-based file names. The copied file's name will be *[original file name].[unique hash value].[original file type]* (e.g. `cat.[unique hash value].jpg`).
-
-    * :2: - Instructs Buster to search each input file's content, replacing all references to file names with their corresponding hash-based file names. A backup of each input file is saved with a file name of *[original file name].buster-copy.[original file type]* (e.g. `./index.buster-copy.html`).
-
-    * :3: - Instructs Buster to create a copy of each input file using a hash-based file name and to search each copied file's content, replacing all references to file names with their corresponding hash-based file names. The copied file's hash-based file name will be *[original file name].[unique hash value].[original file type]* (e.g. `app.[unique hash value].js`).
-
-3. output - a relative path to where the output of the operation is to be saved. Supports *globs/wildcard* patterns.
+Supports *globs/wildcard* patterns.
 
 >__Important__ Buster assumes that all relative paths are relative to `process.cwd()`.
+
+>__Important__ Buster implements its *glob* support using node package __glob__. Please refer to node package [*glob*](https://www.npmjs.com/package/glob) should you need additional information on using globs with Buster. 
+
+### Operation
+Indicates the *actions* that Buster is to perform on the od's input file(s). It is a number, surrounded by colons (e.g. ":1:"). The following 3 operations are currently supported:
+
+#### :1:
+>__Important__ This operation should be used for files whose content is not to be searched for file names but whose own file names need to be hashed for cache busting purposes (i.e. `.jpg, .gif, etc.`).
+
+* Instructs Buster to save a copy of each of the od's input files to the od's output destination with a unique MD5 hash-based file name.
+
+* The format of each unique MD5 hash-based file name will be *[original file name].[unique hash value].[original file type]* (e.g. `cat.[unique hash value].jpg`).
+
+#### :2:
+>__Important__ This operation should be used for files whose content is to be searched for file names but whose own file names are not to be hashed (i.e. `index.html`).
+
+* Instructs Buster to backup each of the od's input files in its current location with a file name of *[original file name].buster-copy.[original file type]* (e.g. `./index.buster-copy.html`) only if both the input file's path and output's destination path are the same.
+
+* Instructs Buster to then copy each of the od's input files to the od's output destination only if both the input file's path and output's destination path are different.
+
+#### :3:
+>__Important__ This operation should be used for files whose content is to be searched for file names and whose own file names need to be hashed for cache busting purposes (i.e. `.js, .scss, .css, etc.`).
+
+* Instructs Buster to save a copy of each of the od's input files to the od's output destination with a unique MD5 hash-based file name.
+
+* The format of each unique MD5 hash-based file name will be *[original file name].[unique hash value].[original file type]* (e.g. `cat.[unique hash value].js`).
+
+### Output
+A relative path to where the files are to be saved.
+
+>__Important__ Buster assumes that all relative paths are relative to `process.cwd()`.
+
+>__Important__ When saving files to an od's output destination, Buster will make folders and their parents if needed.
 
 __example__ operational directive:
 
@@ -60,9 +87,6 @@ __example__ operational directive using a glob:
     `media/**/*.jpg:1:staging/media`
 
 The above directs Buster to recursively traverse all files and folders, starting from within the *media* folder, and to save a copy of each file that matches the *`*.jpg`* pattern to the *staging/media* folder with a hash-based file name.
-
-
->__Important__ When copying files, Buster will make folders and their parents if needed.
 
 The result of the above would be:
 
@@ -85,44 +109,42 @@ The result of the above would be:
     |        |- lion.jpg
     |        |- tiger.jpg
 
->__Important__ Buster implements its *glob* support using node package __glob__. Please refer to node package [*glob*](https://www.npmjs.com/package/glob) should you need additional information on using globs with Buster. 
+## Configuration
 
-## configuration
+Buster builds its runtime configuration from the [sub commands](#sub-commands), [options](#options) and [operational directives](#operational-directives) it gets from the [command line](#command-line-configuration), from [a script](#calling-buster-from-a-script), from [.buster.json](#busterjson-configuration) or from [package.json](#packagejson-configuration).
 
-Buster builds its runtime configuration from the [sub commands](#sub-commands), [options](#options) and [operational directives](#operational-directives) it gets from the [command line](#command-line-configuration), from [another program](#calling-buster-programmatically), from [.buster.json](#busterjson-configuration) or from [package.json](#packagejson-configuration).
-
-## sub commands
+## Sub Commands
 Buster has 2 sub commands:
 
-### bust
+### Bust
 `buster bust [options] <ods>`
 
 Commands Buster to cache bust the files identified by the operational directives.
 
-### restore
+### Restore
 `buster restore [options] <ods>`
 
 Commands Buster to restore the project back to its *original state*.
 
 >__*Important*__ for *restore* to work, you must provide the same *ignored option files list* and the same *operational directives list* used to run the *bust* command.
 
-## options
+## Options
 Buster supports the following options:
 
-### ignore
+### Ignore
 `buster <sub command> [-i|--ignore] <'path/to/file[,path/to/file,...]'> <ods>`
 
 Requires a *quoted* list of one or more comma separated *paths to files* to ignore.
 
 Supports *globs* and *wildcard* characters patterns.
 
-### manifest
+### Manifest
 `buster <bust> [-m|--manifest]`
 
 Saves the manifest to *buster.manifest.json* in the project's *root folder*.
 
 __sample__  buster.manifest.json file:
-```
+```json
 {
     "manifest": [
         {
@@ -171,12 +193,12 @@ __sample__  buster.manifest.json file:
 }
 ```
 
-### verbose
+### Verbose
 `buster <sub command> [-v|--verbose] <ods>`
 
-Provides detailed logging
+Provides verbose logging
 
-## command line configuration
+## Command Line Configuration
 
 At the command line type `buster -h`:
 
@@ -196,13 +218,13 @@ __examples:__
 
     $ buster restore -i 'media/original/**/*.jpg' media/**/*.jpg:1:staging/media/,./index.html:2:staging,css/style.scss:3:staging/css
 
-## .buster.json configuration
+## .buster.json Configuration
 
 __examples:__
 
-```
+```json
 {
-    "command": "bust":,
+    "command": "bust",
     "directives": [
         "media/meow.jpg:1:media",
         "./index.html:2:.",
@@ -212,7 +234,7 @@ __examples:__
 }
 
 {
-    "command": "restore":,
+    "command": "restore",
     "directives": [
         "media/meow.jpg:1:media",
         "./index.html:2:.",
@@ -222,7 +244,7 @@ __examples:__
 }
 
 {
-    "command": "bust":,
+    "command": "bust",
     "options": {
         "manifest": true,
         "verbose": true,
@@ -236,7 +258,7 @@ __examples:__
 }
 
 {
-    "command": "restore":,
+    "command": "restore",
     "options": {
         "verbose": true
     },
@@ -249,9 +271,9 @@ __examples:__
 }
 
 {
-    "command": "bust":,
+    "command": "bust",
     "options": {
-        "manifest": true
+        "manifest": true,
         "ignore": "media/original/**/*.jpg"
     },
     "directives": [
@@ -263,7 +285,7 @@ __examples:__
 }
 
 {
-    "command": "restore":,
+    "command": "restore",
     "options": {
         "ignore": "media/original/**/*.jpg"
     },
@@ -277,12 +299,12 @@ __examples:__
 ```
 >__*Important*__ Buster expects *.buster.json* to reside in your project's root folder, alongside package.json.
 
-## package.json configuration
+## package.json Configuration
 
 __examples:__
-```
+```json
 "buster": {
-    "command": "bust":,
+    "command": "bust",
     "directives": [
         "media/meow.jpg:1:media",
         "./index.html:2:.",
@@ -292,7 +314,7 @@ __examples:__
 }
 
 "buster": {
-    "command": "restore":,
+    "command": "restore",
     "directives": [
         "media/meow.jpg:1:media",
         "./index.html:2:.",
@@ -302,7 +324,7 @@ __examples:__
 }
 
 "buster": {
-    "command": "bust":,
+    "command": "bust",
     "options": {
         "manifest": true,
         "verbose": true
@@ -316,7 +338,7 @@ __examples:__
 }
 
 "buster": {
-    "command": "restore":,
+    "command": "restore",
     "options": {
         "verbose": true
     },
@@ -329,9 +351,9 @@ __examples:__
 }
 
 "buster": {
-    "command": "bust":,
+    "command": "bust",
     "options": {
-        "manifest": true
+        "manifest": true,
         "ignore": "media/original/**/*.jpg"
     },
     "directives": [
@@ -343,7 +365,7 @@ __examples:__
 }
 
 "buster": {
-    "command": "restore":,
+    "command": "restore",
     "options": {
         "ignore": "media/original/**/*.jpg"
     },
@@ -356,9 +378,9 @@ __examples:__
 }
 ```
 
-## how Buster determines its runtime configuration
+## How Buster Determines Its Runtime Configuration
 
-Buster attempts to read configuration data from the *command line*, from *params passed to it from another program*, from *.buster.json* and from within *package.json*. For each source it finds, Buster attempts to validate its data and then determines if that source's data is *complete*. If the data is valid and it is complete, then Buster builds its runtime configuration from it.
+Buster attempts to read configuration data from the *command line*, from *params passed to it from a script*, from *.buster.json* and from within *package.json*. For each source it finds, Buster attempts to validate its data and then determines if that source's data is *complete*. If the data is valid and it is complete, then Buster builds its runtime configuration from it.
 
 > *Important* Buster considers a source's data to be complete if it contains a list of [operational directives](#operational-directives).
 
@@ -380,13 +402,12 @@ The following pseudo code describes the process Buster uses to construct its run
 This *blending* of configuration data affords a lot of flexibility for managing your Buster configurations:
 
 * using command line configuration alone
-* using command line configuration in combination with any one of the other sources of configuration data
+* using command line configuration in combination with either
+* configuring and calling Buster from within a script
 
-## author's preferred approach to configuring Buster
+## Suggested Approach To Configuring Buster
 
-I use the command line in conjunction with the other possible sources of configuration data.
-
-As an example, when working with Node projects, I create 2 NPM tasks:
+When working with a Node projects, for example, create 2 NPM tasks:
 
     "bust": "buster bust -m"
 
@@ -394,8 +415,8 @@ and
 
     "restore": "buster restore"
 
-I place the operational directives in .buster.json.:
-```
+Place the operational directives in .buster.json.:
+```json
 {
     "directives": [
         "media/**/*.jpg:1:staging/media",
@@ -405,19 +426,25 @@ I place the operational directives in .buster.json.:
     ]
 }
 ```
-When I want to cache bust my project, I run the following at the command line:
+To *cache bust* the project, run the following at the command line:
 
     >$npm run bust
 
-When I want to clean/restore my project, I run the following at the command line:
+To *restore* the project, run the following at the command line:
 
     >$npm run restore
 
-## calling Buster programmatically
-Buster can be called programmatically, allowing it to be used as part of a greater workflow:
+## Calling Buster From A Script
+Buster can be called from a *script*, allowing it to be used as part of a greater workflow.
 
-```
+Scripting Buster to *cache bust* your project:
+
+```js
 const buster = require("@4awpawz/buster");
+
+.
+.
+.
 
 const paramsConfig = {
     command: "bust",
@@ -433,19 +460,52 @@ const paramsConfig = {
 }
 
 buster(paramsConfig);
+
+.
+.
+.
 ```
 
-## filing bugs and feature requests
+The above call to Buster is *synchronous*, and therefore execution will not wait for Buster to complete.
+
+To wait for Buster to complete, call buster *asynchronously* using async/await, as in the following:
+
+```js
+await buster(paramsConfig);
+
+.
+.
+.
+```
+
+Scripting Buster to *restore* your project is just as easy:
+
+```js
+const buster = require("@4awpawz/buster");
+
+.
+.
+.
+
+const paramsConfig = {
+    command: "restore",
+    directives: [
+        "media/**/*.jpg:1:staging/media",
+        "./index.html:2:staging",
+        "css/test.css:3:staging/css",
+        "script/test.js:3:staging/script"
+    ]
+}
+
+buster(paramsConfig);
+
+.
+.
+.
+```
+
+## Filing Bugs And Feature Requests
 * https://github.com/4awpawz/buster/issues
 
-## to dos
-1. ~~scriptable~~ - targeting release v0.1.0 - &check;
-1. ~~non blocking/asynchronous processing~~ - targeting release v0.1.0 - &check;
-1. ~~glob/ignore support~~ - targeting release v0.1.0 - &check;
-1. ~~mirror source dir structure when destination path is different from source path~~ - targeting release v0.1.0 - &check;
-1. ~~change manifest name to buster.manifest.json~~ - targeting release v0.1.0 - &check;
-1. ~~verbose log option; default = false~~ - targeting release v0.1.0 - &check;
-1. ~~readme (this file)~~ - targeting release v0.1.0 - &check;
-
-## license
+## License
 Copyright &copy; 2018, `Jeffrey Schwartz`. Released under the `MIT license`.
