@@ -46,7 +46,7 @@ __example__ operational directive:
 
     `media/housecat.jpg:1:media`
 
-The above directs Buster to save a copy of *media/meow.jpg* to the *media* folder with a hash-based file name (i.e. *media/meow.[unique hash value].jpg*). 
+The above directs Buster to save a copy of *media/housecat.jpg* to the *media* folder with a hash-based file name (i.e. *media/housecat.[unique hash value].jpg*). 
 
 The result of the above would be:
 
