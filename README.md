@@ -388,9 +388,8 @@ The following pseudo code describes the process Buster uses to construct its run
 
     if commandLineConfig is supplied and is complete 
         then use commandLineConfig
-    else if paramsConfig is supplied
-    and { ...commandLineConfig, ...paramsConfig } is complete
-        then use { ...commandLineConfig, ...paramsConfig }
+    else if paramsConfig is supplied and is complete
+        then use paramsConfig
     else if busterConfig is supplied
     and { ...commandLineConfig, ...busterConfig } is complete
         then use { ...commandLineConfig, ...busterConfig }
@@ -401,11 +400,11 @@ The following pseudo code describes the process Buster uses to construct its run
     
 This *blending* of configuration data affords a lot of flexibility for managing your Buster configurations:
 
-* using command line configuration alone
-* using command line configuration in combination with either
-* configuring and calling Buster from within a script
+* use only command line configuration
+* use only configuration pased from a script
+* use command line configuration in combination with either .buster.json or with package.json
 
-## Suggested Approach To Configuring Buster
+## Example Project Configuration
 
 When working with a Node projects, for example, create 2 NPM tasks:
 
