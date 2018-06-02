@@ -401,7 +401,7 @@ The following pseudo code describes the process Buster uses to construct its run
 This *blending* of configuration data affords a lot of flexibility for managing your Buster configurations:
 
 * use only command line configuration
-* use only configuration pased from a script
+* use only configuration passed from a script
 * use command line configuration in combination with either .buster.json or with package.json
 
 ## Example Project Configuration
