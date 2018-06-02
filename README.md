@@ -438,6 +438,7 @@ Scripting Buster to *cache bust* your project:
 
 ```js
 const buster = require("@4awpawz/buster");
+
 const paramsConfig = {
     command: "bust",
     options: {
