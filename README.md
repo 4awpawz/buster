@@ -1,4 +1,4 @@
-# A cache buster called *Buster*
+# A Cache Buster Called *Buster*
 Buster busts your browser cache problems
 
 ## Features
@@ -20,13 +20,11 @@ Buster busts your browser cache problems
 1. integrates into your projects and workflows
 
 ## Installation
-    # installing globally
-    npm install -g @4awpawz/buster
+    $ npm install -g @4awpawz/buster
 
-    # installing locally
-    npm install --save-dev @4awpawz/buster
+    $ npm install --save-dev @4awpawz/buster
     
-## Operational directives
+## Operational Directives
 Buster employs a concept called an *Operational Directive*, abbreviated *od*, which you *declare* in your configuration and which Buster uses to direct the operations it performs on your project's files. Each od is comprised of 3 parts, an [input](#input), an [operation](#operation), and an [output](#output).
 
 ### Input
@@ -427,11 +425,11 @@ Place the operational directives in .buster.json.:
 ```
 To *cache bust* the project, run the following at the command line:
 
-    >$npm run bust
+    $ npm run bust
 
 To *restore* the project, run the following at the command line:
 
-    >$npm run restore
+    $ npm run restore
 
 ## Calling Buster From A Script
 Buster can be called from a *script*, allowing it to be used as part of a greater workflow.
@@ -440,11 +438,6 @@ Scripting Buster to *cache bust* your project:
 
 ```js
 const buster = require("@4awpawz/buster");
-
-.
-.
-.
-
 const paramsConfig = {
     command: "bust",
     options: {
@@ -459,10 +452,6 @@ const paramsConfig = {
 }
 
 buster(paramsConfig);
-
-.
-.
-.
 ```
 
 The above call to Buster is *synchronous*, and therefore execution will not wait for Buster to complete.
@@ -471,20 +460,12 @@ To wait for Buster to complete, call buster *asynchronously* using async/await, 
 
 ```js
 await buster(paramsConfig);
-
-.
-.
-.
 ```
 
 Scripting Buster to *restore* your project is just as easy:
 
 ```js
 const buster = require("@4awpawz/buster");
-
-.
-.
-.
 
 const paramsConfig = {
     command: "restore",
@@ -497,10 +478,6 @@ const paramsConfig = {
 }
 
 buster(paramsConfig);
-
-.
-.
-.
 ```
 
 ## Filing Bugs And Feature Requests
