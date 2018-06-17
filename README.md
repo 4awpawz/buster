@@ -13,7 +13,7 @@ Buster busts your browser cache problems
 
 1. can restore your project back to its original state
 
-1. intuitive configuration via the command line, .buster.json, and package.json
+1. intuitive configuration via the command-line, .buster.json, and package.json
 
 1. scriptable
 
@@ -109,7 +109,7 @@ The result of the above would be:
 
 ## Configuration
 
-Buster builds its runtime configuration from the [sub commands](#sub-commands), [options](#options) and [operational directives](#operational-directives) it gets from the [command line](#command-line-configuration), from [a script](#calling-buster-from-a-script), from [.buster.json](#busterjson-configuration) or from [package.json](#packagejson-configuration).
+Buster builds its runtime configuration from the [sub commands](#sub-commands), [options](#options) and [operational directives](#operational-directives) it gets from the [command-line](#command-line-configuration), from [a script](#calling-buster-from-a-script), from [.buster.json](#busterjson-configuration) or from [package.json](#packagejson-configuration).
 
 ## Sub Commands
 Buster has 2 sub commands:
@@ -128,6 +128,15 @@ Commands Buster to restore the project back to its *original state*.
 
 ## Options
 Buster supports the following options:
+
+### Safe Mode
+`since v0.2.0`
+
+`buster <bust> [-s|--safe-mode]`
+
+Instructs buster to process all its input files in their current folders without moving, copying or renaimg them. 
+
+>__*WARNING* Never use safe-mode when cache-busting files in folders used to develop your web site.__ Safe Mode is meant only to be used when not moving, copying and renaming files is safe to do, hence its name *"safe-mode"*, such as when cache-busting files already placed in a web site's *public* folder during a build process.
 
 ### Ignore
 `buster <sub command> [-i|--ignore] <'path/to/file[,path/to/file,...]'> <ods>`
@@ -196,9 +205,9 @@ __sample__  buster.manifest.json file:
 
 Provides verbose logging
 
-## Command Line Configuration
+## Command-Line Configuration
 
-At the command line type `buster -h`:
+At the command-line type `buster -h`:
 
 ![screen shot 2018-05-15 at 9 22 19 am](https://user-images.githubusercontent.com/271288/40059607-74ecf2d8-5822-11e8-8d26-32d63c7849ff.png)
 
@@ -378,7 +387,7 @@ __examples:__
 
 ## How Buster Determines Its Runtime Configuration
 
-Buster attempts to read configuration data from the *command line*, from *params passed to it from a script*, from *.buster.json* and from within *package.json*. For each source it finds, Buster attempts to validate its data and then determines if that source's data is *complete*. If the data is valid and it is complete, then Buster builds its runtime configuration from it.
+Buster attempts to read configuration data from the *command-line*, from *params passed to it from a script*, from *.buster.json* and from within *package.json*. For each source it finds, Buster attempts to validate its data and then determines if that source's data is *complete*. If the data is valid and it is complete, then Buster builds its runtime configuration from it.
 
 > *Important* Buster considers a source's data to be complete if it contains a list of [operational directives](#operational-directives).
 
@@ -398,9 +407,9 @@ The following pseudo code describes the process Buster uses to construct its run
     
 This *blending* of configuration data affords a lot of flexibility for managing your Buster configurations:
 
-* use only command line configuration
+* use only command-line configuration
 * use only configuration passed from a script
-* use command line configuration in combination with either .buster.json or with package.json
+* use command-line configuration in combination with either .buster.json or with package.json
 
 ## Example Project Configuration
 
@@ -423,11 +432,11 @@ Place the operational directives in .buster.json.:
     ]
 }
 ```
-To *cache bust* the project, run the following at the command line:
+To *cache bust* the project, run the following at the command-line:
 
     $ npm run bust
 
-To *restore* the project, run the following at the command line:
+To *restore* the project, run the following at the command-line:
 
     $ npm run restore
 
@@ -483,6 +492,20 @@ buster(paramsConfig);
 
 ## Filing Bugs And Feature Requests
 * https://github.com/4awpawz/buster/issues
+
+## Changelog
+
+### v0.1.6
+
+* Addresses a bug in command-line processing which would cause Buster to crash when the user enters only *"bust"* or *"restore"* from the command-line.
+
+* Addresses a bug in od processing which would cause Buster to crash when attempting to create folders that already  exist.
+
+* Addresses a bug in od processing which would cause Buster to crash when attempting to delete files that no longer exist.
+
+### v0.2.0
+
+* Introduces the feature [safe-mode](#safe-mode), which instructs buster to __process all its input files in their current folders__ without moving, copying or renaimg them.
 
 ## License
 Copyright &copy; 2018, `Jeffrey Schwartz`. Released under the `MIT license`.
