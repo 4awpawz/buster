@@ -200,7 +200,7 @@ Instructs buster to process all its input files in their current folders without
 
 >__*WARNING* This is an experimental feature and may see breaking changes in future releases or may even be removed altogether.__
 
->__*WARNING* Never use safe mode when cache busting files in folders used to develop your web site. Safe Mode doesn't create backups of your files so original files are lost forever!__ Safe Mode should only be used for cache busting *public* folders (i.e. public, dist, staging, .etc) whose content is placed there during a project's build process.
+>__*WARNING* *SAFE MODE DOES NOT SUPPORT THE BACKUP OPTION!*__ Never use safe mode when cache busting files in folders used to develop your web site. Safe Mode doesn't create backups of your files so original files are lost forever! Safe Mode should only be used for cache busting *public* folders (i.e. public, dist, staging, .etc) whose content is placed there during a project's build process.
 
 ### Verbose
 `buster <sub command> [-v|--verbose] <ods>`
@@ -502,17 +502,19 @@ buster(paramsConfig);
 
 Major refactor -  includes but not limited to the following:
 
-* Introduces experimental ["safe mode"](#safe-mode) feature, resolves [`#6`](https://github.com/4awpawz/buster/issues/6)
+* Introduces experimental ["safe mode"](#safe-mode) feature, resolves [`#6`](https://github.com/4awpawz/buster/issues/6).
 
-* v0.1.6 breaks handling of backup files bug, fixes [`#5`](https://github.com/4awpawz/buster/issues/5)
+* v0.1.6 breaks handling of backup files bug, fixes [`#5`](https://github.com/4awpawz/buster/issues/5).
 
-* Removes hashed files from the manifest returned by glob during restore
+* Removes hashed files from the manifest returned by glob during restore.
 
-* Implements new resolution of destination paths
+* Implements new resolution of destination paths.
 
-* Removes the "file-exists" package from the project
+* Removes the "file-exists" package from the project.
 
-* Catching some async exceptions to prevent unresolved promise exceptions
+* Catching some async exceptions to prevent unresolved promise exceptions.
+
+* Configuration attempts to resolve from paramsConfig (i.e. passed via a script) first.
 
 * Updated README.md
 
