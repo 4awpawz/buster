@@ -17,7 +17,7 @@ Buster busts your browser cache problems
 
 1. scriptable
 
-1. integrates into your projects and workflows
+1. easily integrates into your projects and workflows
 
 ## Installation
     $ npm install -g @4awpawz/buster
@@ -129,15 +129,6 @@ Commands Buster to restore the project back to its *original state*.
 ## Options
 Buster supports the following options:
 
-### Safe Mode
-`since v0.2.0`
-
-`buster <bust> [-s|--safe-mode]`
-
-Instructs buster to process all its input files in their current folders without moving, copying or renaimg them. 
-
->__*WARNING* Never use safe-mode when cache-busting files in folders used to develop your web site.__ Safe Mode is meant only to be used when not moving, copying and renaming files is safe to do, hence its name *"safe-mode"*, such as when cache-busting files already placed in a web site's *public* folder during a build process.
-
 ### Ignore
 `buster <sub command> [-i|--ignore] <'path/to/file[,path/to/file,...]'> <ods>`
 
@@ -199,6 +190,17 @@ __sample__  buster.manifest.json file:
     ]
 }
 ```
+
+### Safe Mode
+`since v0.2.0`
+
+`buster <bust> [-s|--safe-mode]`
+
+Instructs buster to process all its input files in their current folders without moving, copying or renaming them. 
+
+>__*WARNING* This is an experimental feature and may see breaking changes in future releases or may even be removed altogether.__
+
+>__*WARNING* Never use safe mode when cache busting files in folders used to develop your web site. Safe Mode doesn't create backups of your files so original files are lost forever!__ Safe Mode should only be used for cache busting *public* folders (i.e. public, dist, staging, .etc) whose content is placed there during a project's build process.
 
 ### Verbose
 `buster <sub command> [-v|--verbose] <ods>`
@@ -385,18 +387,18 @@ __examples:__
 }
 ```
 
-## How Buster Determines Its Runtime Configuration
+## How Buster Resolves Its Runtime Configuration
 
-Buster attempts to read configuration data from the *command-line*, from *params passed to it from a script*, from *.buster.json* and from within *package.json*. For each source it finds, Buster attempts to validate its data and then determines if that source's data is *complete*. If the data is valid and it is complete, then Buster builds its runtime configuration from it.
+Buster attempts to read configuration data from *params passed to it from a script*, from the *command-line*, from *.buster.json* and from within *package.json*. For each source it finds, Buster attempts to validate its data and then determines if that source's data is *complete*. If the data is valid and it is complete, then Buster builds its runtime configuration from it.
 
-> *Important* Buster considers a source's data to be complete if it contains a list of [operational directives](#operational-directives).
+> *Important* Buster considers a source's data to be complete if it contains a [sub command](#sub-commands) (i.e. "bust" or "restore") and one or more [operational directives](#operational-directives).
 
 The following pseudo code describes the process Buster uses to construct its runtime configuration:
 
-    if commandLineConfig is supplied and is complete 
-        then use commandLineConfig
-    else if paramsConfig is supplied and is complete
+    if paramsConfig is supplied and is complete
         then use paramsConfig
+    else if commandLineConfig is supplied and is complete 
+        then use commandLineConfig
     else if busterConfig is supplied
     and { ...commandLineConfig, ...busterConfig } is complete
         then use { ...commandLineConfig, ...busterConfig }
@@ -407,9 +409,10 @@ The following pseudo code describes the process Buster uses to construct its run
     
 This *blending* of configuration data affords a lot of flexibility for managing your Buster configurations:
 
-* use only command-line configuration
 * use only configuration passed from a script
-* use command-line configuration in combination with either .buster.json or with package.json
+* use only command-line configuration
+* use configuration from .buster.json in combination with command-line configuration.
+* use configuration from package.json in combination with command-line configuration.
 
 ## Example Project Configuration
 
@@ -495,6 +498,24 @@ buster(paramsConfig);
 
 ## Changelog
 
+### v0.2.0
+
+Major refactor -  includes but not limited to the following:
+
+* Introduces experimental ["safe mode"](#safe-mode) feature, resolves [`#6`](https://github.com/4awpawz/buster/issues/6)
+
+* v0.1.6 breaks handling of backup files bug, fixes [`#5`](https://github.com/4awpawz/buster/issues/5)
+
+* Removes hashed files from the manifest returned by glob during restore
+
+* Implements new resolution of destination paths
+
+* Removes the "file-exists" package from the project
+
+* Catching some async exceptions to prevent unresolved promise exceptions
+
+* Updated README.md
+
 ### v0.1.6
 
 * Addresses a bug in command-line processing which would cause Buster to crash when the user enters only *"bust"* or *"restore"* from the command-line.
@@ -502,10 +523,6 @@ buster(paramsConfig);
 * Addresses a bug in od processing which would cause Buster to crash when attempting to create folders that already  exist.
 
 * Addresses a bug in od processing which would cause Buster to crash when attempting to delete files that no longer exist.
-
-### v0.2.0
-
-* Introduces the feature [safe-mode](#safe-mode), which instructs buster to __process all its input files in their current folders__ without moving, copying or renaimg them.
 
 ## License
 Copyright &copy; 2018, `Jeffrey Schwartz`. Released under the `MIT license`.
