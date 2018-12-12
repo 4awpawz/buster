@@ -498,11 +498,17 @@ buster(paramsConfig);
 
 ## Changelog
 
+### v0.2.2
+
+This release includes no changes to the code base.
+
+* Addresses issue [`#11`]( https://github.com/4awpawz/buster/issues/11) which seeks to lockdown all project dependencies using NPM's `shrinkwrap`.
+
 ### v0.2.1
 
 Major and minor bug fixes - includes but not limited to the following:
 
-* Address issue [`#9`](https://github.com/4awpawz/buster/issues/9) which would sometimes cause `restore` to fail. This fix totally replaces the one introduced in v0.2.0, and now handles the issue earlier in the restore processing cycle.
+* Addresses issue [`#9`](https://github.com/4awpawz/buster/issues/9) which would sometimes cause `restore` to fail. This fix totally replaces the one introduced in v0.2.0, and now handles the issue earlier in the restore processing cycle.
 
 * Addresses issue [`10`](https://github.com/4awpawz/buster/issues/10) which would cause buster to fail when reading command line configuration data belonging to the application that launched it with paramsConfig.
 
