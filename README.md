@@ -498,6 +498,15 @@ buster(paramsConfig);
 
 ## Changelog
 
+### v0.2.3
+
+Major bug fixes:
+
+* Addresses issue [`#13`](https://github.com/4awpawz/buster/issues/13) which would cause Buster to crash when reading a configuration file that doesn't exist.
+
+
+* Addresses issue [`#12`](https://github.com/4awpawz/buster/issues/12) which would cause Buster to crash when setting paramsConfig to a default value of `{}` to indicate that it wasn't passed.
+
 ### v0.2.2
 
 This release includes no changes to the code base.
