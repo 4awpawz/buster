@@ -2,7 +2,7 @@ const configFactory = require("./lib/config");
 const manifestFactory = require("./lib/manifest");
 const expandOds = require("./lib/ods");
 
-const processBuster = async (paramsConfig = {}) => {
+const processBuster = async (paramsConfig) => {
     const config = await configFactory(paramsConfig);
     const expandedOds = await expandOds(config.directives, config.options.ignore);
 
