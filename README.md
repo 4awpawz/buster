@@ -498,6 +498,10 @@ buster(paramsConfig);
 
 ## Changelog
 
+### v0.2.4
+
+This release addresses fixes for security warnings for packages used internally by Buster only. There are no changes to the code base.
+
 ### v0.2.3
 
 Major bug fixes:
