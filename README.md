@@ -1,5 +1,5 @@
 # A Cache Buster Called *Buster*
-Buster busts your browser cache problems
+Buster busts your browser cache problems!
 
 ## Features
 
@@ -44,12 +44,12 @@ Indicates the *actions* that Buster is to perform on the od's input file(s). It 
 
 * Instructs Buster to save a copy of each of the od's input files to the od's output destination with a unique MD5 hash-based file name.
 
-* The format of each unique MD5 hash-based file name will be *[original file name].[unique hash value].[original file type]* (e.g. `cat.[unique hash value].jpg`).
+* The format of each unique MD5 hash-based file name will be *[unique hash]-[original file name].[original file extension]* (e.g. `[unique hash]-cat.jpg`). **Note: this format changed with v0.3.0.**
 
 #### :2:
 >__Important__ This operation should be used for files whose content is to be searched for file names but whose own file names are not to be hashed (i.e. `index.html`).
 
-* Instructs Buster to backup each of the od's input files in its current location with a file name of *[original file name].buster-copy.[original file type]* (e.g. `./index.buster-copy.html`) only if both the input file's path and output's destination path are the same.
+* Instructs Buster to backup each of the od's input files in its current location with a file name of *[original file name].buster-copy.[original file extension]* (e.g. `./index.buster-copy.html`) only if both the input file's path and output's destination path are the same.
 
 * Instructs Buster to then copy each of the od's input files to the od's output destination only if both the input file's path and output's destination path are different.
 
@@ -58,7 +58,7 @@ Indicates the *actions* that Buster is to perform on the od's input file(s). It 
 
 * Instructs Buster to save a copy of each of the od's input files to the od's output destination with a unique MD5 hash-based file name.
 
-* The format of each unique MD5 hash-based file name will be *[original file name].[unique hash value].[original file type]* (e.g. `cat.[unique hash value].js`).
+* The format of each unique MD5 hash-based file name will be *[unique hash]-[original file name].[original file extension]* (e.g. `[unique hash]-cat.jpg`). **Note: this format changed with v0.3.0.**
 
 ### Output
 A relative path to where the files are to be saved.
@@ -71,14 +71,14 @@ __example__ operational directive:
 
     `media/housecat.jpg:1:media`
 
-The above directs Buster to save a copy of *media/housecat.jpg* to the *media* folder with a hash-based file name (i.e. *media/housecat.[unique hash value].jpg*). 
+The above directs Buster to save a copy of *media/housecat.jpg* to the *media* folder with a hash-based file name (i.e. *media/[unique hash value]-housecat.jpg*). 
 
 The result of the above would be:
 
     |- media/
     |    | 
     |    |- housecat.jpg
-    |    |- housecat.[unique hash name].jpg
+    |    |- [unique hash]-housecat.jpg
 
 __example__ operational directive using a glob:
 
@@ -92,12 +92,12 @@ The result of the above would be:
     |    |
     |    |- media/    <-- created
     |        |
-    |        |- housecat.[unique hash name].jpg
-    |        |- purringcat.[unique hash name].jpg
+    |        |- [unique hash]-housecat.jpg
+    |        |- [unique hash]-purringcat.jpg
     |        |- bigcats/    <-- created
     |            |
-    |            |- lion.[unique hash name].jpg
-    |            |- tiger.[unique hash name].jpg
+    |            |- [unique hash]-lion.jpg
+    |            |- [unique hash]-tiger.jpg
     |- media/
     |    |
     |    |- housecat.jpg
@@ -149,25 +149,25 @@ __sample__  buster.manifest.json file:
             "source": "media/cyclone-roller-coaster-coney-island-worked.jpg",
             "operation": 1,
             "dest": "staging/media",
-            "hashFileName": "cyclone-roller-coaster-coney-island-worked.0d5a7f4c21151797e98aa6cf76302f7f.jpg"
+            "hashFileName": "0d5a7f4c21151797e98aa6cf76302f7f-cyclone-roller-coaster-coney-island-worked.jpg"
         },
         {
             "source": "media/sub/alphabet-arts-and-crafts-blog-459688-worked.jpg",
             "operation": 1,
             "dest": "staging/media/sub",
-            "hashFileName": "alphabet-arts-and-crafts-blog-459688-worked.d9c0594248cfc285a062f74146b12232.jpg"
+            "hashFileName": "d9c0594248cfc285a062f74146b12232-alphabet-arts-and-crafts-blog-459688-worked.jpg"
         },
         {
             "source": "media/sub/black-and-white-close-up-cobweb-worked.jpg",
             "operation": 1,
             "dest": "staging/media/sub",
-            "hashFileName": "black-and-white-close-up-cobweb-worked.b10a846ff8428effe892c1f9b6a91680.jpg"
+            "hashFileName": "b10a846ff8428effe892c1f9b6a91680-black-and-white-close-up-cobweb-worked.jpg"
         },
         {
             "source": "media/tatoo-handshake-worked.jpg",
             "operation": 1,
             "dest": "staging/media",
-            "hashFileName": "tatoo-handshake-worked.18267714b0e7f14d41e215354ddbf88a.jpg"
+            "hashFileName": "18267714b0e7f14d41e215354ddbf88a-tatoo-handshake-worked.jpg"
         },
         {
             "source": "./index.html",
@@ -179,13 +179,13 @@ __sample__  buster.manifest.json file:
             "source": "css/test.css",
             "operation": 3,
             "dest": "staging/css",
-            "hashFileName": "test.8051095bd11b6e31145a8a3fd355d4c6.css"
+            "hashFileName": "8051095bd11b6e31145a8a3fd355d4c6-test.css"
         },
         {
             "source": "script/test.js",
             "operation": 3,
             "dest": "staging/script",
-            "hashFileName": "test.e6187d98b7362765c69015d34f010dd2.js"
+            "hashFileName": "e6187d98b7362765c69015d34f010dd2-test.js"
         }
     ]
 }
@@ -498,9 +498,17 @@ buster(paramsConfig);
 
 ## Changelog
 
+### v0.3.0
+
+This release addresses one bug and fixes for security warnings for packages used internally by Buster only. Also landing with this release is reduced console output; use the `verbose` config option if needed.
+
+Major bug fixes:
+
+* Addresses issue [`#14`](https://github.com/4awpawz/buster/issues/14) which could cause Buster to mangle hashed file names. **Please note that beginning with this release, Buster now generates hashed file names as *[hash]-[file name].[file extension]*.  You are strongly advised to upgrade your projects and rebuild them.**
+
 ### v0.2.4
 
-This release addresses fixes for security warnings for packages used internally by Buster only. There are no changes to the code base.
+This release addresses fixes for security warnings for package used internally by Buster only. There are no changes to the code base.
 
 ### v0.2.3
 
