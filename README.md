@@ -1,6 +1,9 @@
 # A Cache Buster Called *Buster*
 Buster busts your browser cache problems!
 
+## Version
+0.3.1
+
 ## Features
 
 1. renames files using MD5 hash-based cache busting file names
@@ -23,7 +26,7 @@ Buster busts your browser cache problems!
     $ npm install -g @4awpawz/buster
 
     $ npm install --save-dev @4awpawz/buster
-    
+
 ## Operational Directives
 Buster employs a concept called an *Operational Directive*, abbreviated *od*, which you *declare* in your configuration and which Buster uses to direct the operations it performs on your project's files. Each od is comprised of 3 parts, an [input](#input), an [operation](#operation), and an [output](#output).
 
@@ -34,7 +37,7 @@ Supports *globs/wildcard* patterns.
 
 >__Important__ Buster assumes that all relative paths are relative to `process.cwd()`.
 
->__Important__ Buster implements its *glob* support using node package __glob__. Please refer to node package [*glob*](https://www.npmjs.com/package/glob) should you need additional information on using globs with Buster. 
+>__Important__ Buster implements its *glob* support using node package __glob__. Please refer to node package [*glob*](https://www.npmjs.com/package/glob) should you need additional information on using globs with Buster.
 
 ### Operation
 Indicates the *actions* that Buster is to perform on the od's input file(s). It is a number, surrounded by colons (e.g. ":1:"). The following 3 operations are currently supported:
@@ -71,12 +74,12 @@ __example__ operational directive:
 
     `media/housecat.jpg:1:media`
 
-The above directs Buster to save a copy of *media/housecat.jpg* to the *media* folder with a hash-based file name (i.e. *media/[unique hash value]-housecat.jpg*). 
+The above directs Buster to save a copy of *media/housecat.jpg* to the *media* folder with a hash-based file name (i.e. *media/[unique hash value]-housecat.jpg*).
 
 The result of the above would be:
 
     |- media/
-    |    | 
+    |    |
     |    |- housecat.jpg
     |    |- [unique hash]-housecat.jpg
 
@@ -196,7 +199,7 @@ __sample__  buster.manifest.json file:
 
 `buster <bust> [-s|--safe-mode]`
 
-Instructs buster to process all its input files in their current folders without moving, copying or renaming them. 
+Instructs buster to process all its input files in their current folders without moving, copying or renaming them.
 
 >__*WARNING* This is an experimental feature and may see breaking changes in future releases or may even be removed altogether.__
 
@@ -397,7 +400,7 @@ The following pseudo code describes the process Buster uses to construct its run
 
     if paramsConfig is supplied and is complete
         then use paramsConfig
-    else if commandLineConfig is supplied and is complete 
+    else if commandLineConfig is supplied and is complete
         then use commandLineConfig
     else if busterConfig is supplied
     and { ...commandLineConfig, ...busterConfig } is complete
@@ -406,7 +409,7 @@ The following pseudo code describes the process Buster uses to construct its run
     and { ...commandLineConfig, ...packageJsonConfig } is complete
         then use { ...commandLineConfig, ...packageJsonConfig }
     else terminate processing
-    
+
 This *blending* of configuration data affords a lot of flexibility for managing your Buster configurations:
 
 * use only configuration passed from a script
@@ -498,6 +501,9 @@ buster(paramsConfig);
 
 ## Changelog
 
+### v0.3.1
+This release addresses fixes for security warnings for packages used internally by Buster only. There are no changes to the code base.
+
 ### v0.3.0
 
 This release addresses one bug and fixes for security warnings for packages used internally by Buster only. Also landing with this release is reduced console output; use the `verbose` config option if needed.
@@ -508,7 +514,7 @@ Major bug fixes:
 
 ### v0.2.4
 
-This release addresses fixes for security warnings for package used internally by Buster only. There are no changes to the code base.
+This release addresses fixes for security warnings for packages used internally by Buster only. There are no changes to the code base.
 
 ### v0.2.3
 
