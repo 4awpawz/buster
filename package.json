@@ -34,16 +34,16 @@
   },
   "license": "MIT",
   "dependencies": {
-    "commander": "^3.0.1",
-    "glob": "^7.1.4",
+    "commander": "^3.0.2",
+    "glob": "^7.1.6",
     "is-directory": "^0.3.1",
-    "make-dir": "^3.0.0",
+    "make-dir": "^3.1.0",
     "md5-file": "^4.0.0"
   },
   "devDependencies": {
-    "eslint": "^6.4.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1"
