@@ -1,3 +1,4 @@
+"use strict";
 const configFactory = require("./lib/config");
 const manifestFactory = require("./lib/manifest");
 const expandOds = require("./lib/ods");
