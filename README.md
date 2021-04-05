@@ -1,452 +1,251 @@
 # A Cache Buster Called *Buster*
+
 Buster busts your browser cache problems!
 
 ## Version
-0.3.1
+
+0.4.0
 
 ## Features
 
-1. renames files using MD5 hash-based cache busting file names
+* Cache busts your project's files in place.
 
-1. cache bust in place or target a different folder
+* Fingerprints (renames) files using MD5 hash-based cache busting file names.
 
-1. replaces references in files to original files names with their MD5 hash-based file names
+* Replaces references in files to original file names with their MD5 hash-based file names.
 
-1. optionally outputs a manifest file to buster.manifest.json
+* Optionally outputs a manifest file to buster.manifest.json.
 
-1. can restore your project back to its original state
+* Simple and intuitive configuration using .buster.json.
 
-1. intuitive configuration via the command-line, .buster.json, and package.json
+* Invokable via the command line and scriptable.
 
-1. scriptable
-
-1. easily integrates into your projects and workflows
+* Easily integrates into your project workflow.
 
 ## Installation
+
+### Install Globally
+
     $ npm install -g @4awpawz/buster
+
+### Install Locally
 
     $ npm install --save-dev @4awpawz/buster
 
+## Buster Primer
+
+### Project Relative File Paths And Site Relative URLs
+
+In the documentation that follows, references are made to __project relative file paths__ and to __site relative URLs__.
+
+1. "Project relative file paths" pertain strictly to your project's file structure. They are used to declare the __input__ in [operational directives](#operational-directives) when declaring the file paths to assets in your project that you want targeted by Buster for cache busting.
+
+1. "Site relative URLs" pertain strictly to your website's runtime environment and are used to reference assets throughout your site (e.g. the _src attribute_ of an img tag, the _href_ attribute of a link tag, the _URL() CSS function_  declared inside of a CSS stylesheet).
+
+The important thing here is to understand that in order for Buster to perform its cache busting you, the developer, must insure that your site employs site relative URLs when referencing its assets. This is because Buster converts your project relative file paths to site relative URLs which it then uses to search the content of your site's files for site relative URLs that need to be updated to point to the assets it has fingerprinted with unique hashes.
+
+#### A Typical Buster Work Flow
+
+Your development build tool generates your __production ready site__ (as opposed to development) into your project's __release folder__. When configuring Buster to cache bust your site, you would target your project files in the __release folder__ by using __project relative file paths__ in your Buster configuration's [operational directives](#operational-directives). Then from the root of your project you can use the command line to run Buster to cache bust your site in the release folder. You can then run your site from the release folder to insure that it is functioning as expected and once it is determined that it is functioning as expected you can then deploy your site directly from the release folder to its server using a command line utility such as rsync.
+
+In a typical website project with the following or similar project structure
+
+```
+|- myproject
+|- |- release/
+|- |- |- media/
+|- |- |- |- housecat.jpg
+|- |- |- index.html
+|- |- .buster.json
+```
+
+the project relative file path used in an operational directive to target housecat.jpg would be release/media/housecat.jpg and the site relative URL used to identify the image file in the browser would be media/housecat.jpg.
+
 ## Operational Directives
-Buster employs a concept called an *Operational Directive*, abbreviated *od*, which you *declare* in your configuration and which Buster uses to direct the operations it performs on your project's files. Each od is comprised of 3 parts, an [input](#input), an [operation](#operation), and an [output](#output).
+
+Buster employs a concept called an *Operational Directive*, abbreviated *od*, which you *declare* in your _.buster.json_ configuration file and which Buster uses to direct the operations it performs on your project's files. Each od is comprised of 2 parts, an [input](#input), and an [operation](#operation).
 
 ### Input
-A relative path to one or more files.
+
+A project relative file path to one or more files.
 
 Supports *globs/wildcard* patterns.
 
->__Important__ Buster assumes that all relative paths are relative to `process.cwd()`.
+>__Important__ Buster assumes that all project relative file paths are relative to `process.cwd()`.
 
 >__Important__ Buster implements its *glob* support using node package __glob__. Please refer to node package [*glob*](https://www.npmjs.com/package/glob) should you need additional information on using globs with Buster.
 
 ### Operation
-Indicates the *actions* that Buster is to perform on the od's input file(s). It is a number, surrounded by colons (e.g. ":1:"). The following 3 operations are currently supported:
 
-#### :1:
->__Important__ This operation should be used for files whose content is not to be searched for file names but whose own file names need to be hashed for cache busting purposes (i.e. `.jpg, .gif, etc.`).
+Indicates the *actions* that Buster is to perform on the od's input file(s). It is a number preceded by a colon which separates the number from the input (e.g. ":1"). The following 3 operations are currently supported:
 
-* Instructs Buster to save a copy of each of the od's input files to the od's output destination with a unique MD5 hash-based file name.
+#### :1
 
-* The format of each unique MD5 hash-based file name will be *[unique hash]-[original file name].[original file extension]* (e.g. `[unique hash]-cat.jpg`). **Note: this format changed with v0.3.0.**
+Apply this operation only to those files whose own file names are to be fingerprinted for cache busting purposes (e.g. `.jpg, .gif, .map`).
 
-#### :2:
->__Important__ This operation should be used for files whose content is to be searched for file names but whose own file names are not to be hashed (i.e. `index.html`).
+The format of each unique MD5 hash-based file name will be __[original file's base name].[unique hash].[original file's extension]__ (e.g. `cat.[unique hash].jpg`). Should the original file's base name contain 1 or more _periods_ (e.g. __main.js__.map) the format of the MD5 hash-based file name will, as an example, be __main.[unique hash].js.map__.
 
-* Instructs Buster to backup each of the od's input files in its current location with a file name of *[original file name].buster-copy.[original file extension]* (e.g. `./index.buster-copy.html`) only if both the input file's path and output's destination path are the same.
+#### :2
 
-* Instructs Buster to then copy each of the od's input files to the od's output destination only if both the input file's path and output's destination path are different.
+Apply this operation only to those files whose contents are to be searched for site relative URLs that point to assets whose file names have been fingerprinted and therefor need to be updated and whose own file names are not to be fingerprinted for cache busting purposes.
 
-#### :3:
->__Important__ This operation should be used for files whose content is to be searched for file names and whose own file names need to be hashed for cache busting purposes (i.e. `.js, .scss, .css, etc.`).
+#### :3
 
-* Instructs Buster to save a copy of each of the od's input files to the od's output destination with a unique MD5 hash-based file name.
+Apply this operation only to those files whose own file names are to be fingerprinted for cache busting purposes (e.g. `.jpg, .gif, .map`) and whose contents are to be searched for site relative URLs that point to assets whose file names have been fingerprinted and therefor need to be updated.
 
-* The format of each unique MD5 hash-based file name will be *[unique hash]-[original file name].[original file extension]* (e.g. `[unique hash]-cat.jpg`). **Note: this format changed with v0.3.0.**
+The format of each unique MD5 hash-based file name will be __[original file's base name].[unique hash].[original file's extension]__ (e.g. `cat.[unique hash].jpg`). Should the original file's base name contain 1 or more _periods_ (e.g. __main.js__.map) the format of the MD5 hash-based file name will, as an example, be __main.[unique hash].js.map__.
 
-### Output
-A relative path to where the files are to be saved.
+### Operational Directive Examples
 
->__Important__ Buster assumes that all relative paths are relative to `process.cwd()`.
+#### Example Operational Directives Using Project Relative File Path:
 
->__Important__ When saving files to an od's output destination, Buster will make folders and their parents if needed.
+Given the following project structure
 
-__example__ operational directive:
-
-    `media/housecat.jpg:1:media`
-
-The above directs Buster to save a copy of *media/housecat.jpg* to the *media* folder with a hash-based file name (i.e. *media/[unique hash value]-housecat.jpg*).
-
-The result of the above would be:
-
-    |- media/
-    |    |
-    |    |- housecat.jpg
-    |    |- [unique hash]-housecat.jpg
-
-__example__ operational directive using a glob:
-
-    `media/**/*.jpg:1:staging/media`
-
-The above directs Buster to recursively traverse all files and folders, starting from within the *media* folder, and to save a copy of each file that matches the *`*.jpg`* pattern to the *staging/media* folder with a hash-based file name.
-
-The result of the above would be:
-
-    |- staging/    <-- created
-    |    |
-    |    |- media/    <-- created
-    |        |
-    |        |- [unique hash]-housecat.jpg
-    |        |- [unique hash]-purringcat.jpg
-    |        |- bigcats/    <-- created
-    |            |
-    |            |- [unique hash]-lion.jpg
-    |            |- [unique hash]-tiger.jpg
-    |- media/
-    |    |
-    |    |- housecat.jpg
-    |    |- purringcat.jpg
-    |    |- bigcats/
-    |        |
-    |        |- lion.jpg
-    |        |- tiger.jpg
-
-## Configuration
-
-Buster builds its runtime configuration from the [sub commands](#sub-commands), [options](#options) and [operational directives](#operational-directives) it gets from the [command-line](#command-line-configuration), from [a script](#calling-buster-from-a-script), from [.buster.json](#busterjson-configuration) or from [package.json](#packagejson-configuration).
-
-## Sub Commands
-Buster has 2 sub commands:
-
-### Bust
-`buster bust [options] <ods>`
-
-Commands Buster to cache bust the files identified by the operational directives.
-
-### Restore
-`buster restore [options] <ods>`
-
-Commands Buster to restore the project back to its *original state*.
-
->__*Important*__ for *restore* to work, you must provide the same *ignored option files list* and the same *operational directives list* used to run the *bust* command.
-
-## Options
-Buster supports the following options:
-
-### Ignore
-`buster <sub command> [-i|--ignore] <'path/to/file[,path/to/file,...]'> <ods>`
-
-Requires a *quoted* list of one or more comma separated *paths to files* to ignore.
-
-Supports *globs* and *wildcard* characters patterns.
-
-### Manifest
-`buster <bust> [-m|--manifest]`
-
-Saves the manifest to *buster.manifest.json* in the project's *root folder*.
-
-__sample__  buster.manifest.json file:
-```json
-{
-    "manifest": [
-        {
-            "source": "media/cyclone-roller-coaster-coney-island-worked.jpg",
-            "operation": 1,
-            "dest": "staging/media",
-            "hashFileName": "0d5a7f4c21151797e98aa6cf76302f7f-cyclone-roller-coaster-coney-island-worked.jpg"
-        },
-        {
-            "source": "media/sub/alphabet-arts-and-crafts-blog-459688-worked.jpg",
-            "operation": 1,
-            "dest": "staging/media/sub",
-            "hashFileName": "d9c0594248cfc285a062f74146b12232-alphabet-arts-and-crafts-blog-459688-worked.jpg"
-        },
-        {
-            "source": "media/sub/black-and-white-close-up-cobweb-worked.jpg",
-            "operation": 1,
-            "dest": "staging/media/sub",
-            "hashFileName": "b10a846ff8428effe892c1f9b6a91680-black-and-white-close-up-cobweb-worked.jpg"
-        },
-        {
-            "source": "media/tatoo-handshake-worked.jpg",
-            "operation": 1,
-            "dest": "staging/media",
-            "hashFileName": "18267714b0e7f14d41e215354ddbf88a-tatoo-handshake-worked.jpg"
-        },
-        {
-            "source": "./index.html",
-            "operation": 2,
-            "dest": "staging",
-            "backupFileName": "./index.buster-copy.html"
-        },
-        {
-            "source": "css/test.css",
-            "operation": 3,
-            "dest": "staging/css",
-            "hashFileName": "8051095bd11b6e31145a8a3fd355d4c6-test.css"
-        },
-        {
-            "source": "script/test.js",
-            "operation": 3,
-            "dest": "staging/script",
-            "hashFileName": "e6187d98b7362765c69015d34f010dd2-test.js"
-        }
-    ]
-}
+```
+|- myproject
+|- |- release/
+|- |- |- media/
+|- |- |- |- housecat.jpg
+|- |- |- index.html => contains img tag with a site relative url for its src i.e. <img src="/media/housecat.jpg">
+|- |- .buster.json
 ```
 
-### Safe Mode
-`since v0.2.0`
+and running Buster from the command line in the myproject folder with the following operational directives
 
-`buster <bust> [-s|--safe-mode]`
+```
+`release/media/housecat.jpg:1`
+`release/index.html:2`
+```
 
-Instructs buster to process all its input files in their current folders without moving, copying or renaming them.
+will result in the following:
 
->__*WARNING* This is an experimental feature and may see breaking changes in future releases or may even be removed altogether.__
+```
+|- myproject
+|- |- release/
+|- |- |- media/
+|- |- |- |- housecat.[unique hash].jpg
+|- |- |- index.html => now contains img tag whose src attribute points to hashed img i.e. <img src="/media/housecat.[unique hash].jpg">
+|- |- .buster.json
+```
 
->__*WARNING* *SAFE MODE DOES NOT SUPPORT THE BACKUP OPTION!*__ Never use safe mode when cache busting files in folders used to develop your web site. Safe Mode doesn't create backups of your files so original files are lost forever! Safe Mode should only be used for cache busting *public* folders (i.e. public, dist, staging, .etc) whose content is placed there during a project's build process.
+#### Example Operational Directives Using Project Relative File Paths And Globs:
 
-### Verbose
-`buster <sub command> [-v|--verbose] <ods>`
+Given the following project structure
 
-Provides verbose logging
+```
+|- myproject
+|- |- release/
+|- |- |- media/
+|- |- |- |- housecat.jpg
+|- |- |- |- purringcat.jpg
+|- |- |- |- bigcats/
+|- |- |- |- |- lion.jpg
+|- |- |- |- |- tiger.jpg
+|- |- |- index.html => contains img tags with site relative urls for its src e.g. <img src="/media/housecat.jpg">, <img src="/media/bigcats/lion.jpg">
+|- |- .buster.json
+```
 
-## Command-Line Configuration
+and running Buster with the following directives
 
-At the command-line type `buster -h`:
+```
+`release/media/**/*.jpg:1
+`release/**/*.html:2`
+```
 
-![screen shot 2018-05-15 at 9 22 19 am](https://user-images.githubusercontent.com/271288/40059607-74ecf2d8-5822-11e8-8d26-32d63c7849ff.png)
+will result as follows:
 
-__examples:__
+```
+|- myproject
+|- |- release/
+|- |- |- media/
+|- |- |- |- housecat.[unique hash].jpg
+|- |- |- |- purringcat.[unique hash].jpg
+|- |- |- |- bigcats/
+|- |- |- |- |- lion.[unique hash].jpg
+|- |- |- |- |- tiger.[unique hash].jpg
+|- |- |- index.html => now contains img tags whose src attributes point to hashed img i.e. <img src="/media/housecat.[unique hash].jpg">, <img src="/media/bigcats/lion.[unique hash].jpg">
+|- |- .buster.json
+```
 
-    $ buster bust media/meow.jpg:1:media/,./index.html:2:.,css/style.scss:3:css
+## buster.json Configuration
 
-    $ buster restore media/meow.jpg:1:media/,./index.html:2:.,css/style.scss:3:css
-
-    $ buster bust -m -v media/**/*.jpg:1:media/,./index.html:2:.,css/style.scss:3:css
-
-    $ buster restore -v media/**/*.jpg:1:media/,./index.html:2:.,css/style.scss:3:css
-
-    $ buster bust -m -i 'media/original/**/*.jpg' media/**/*.jpg:1:staging/media/,./index.html:2:staging,css/style.scss:3:staging/css
-
-    $ buster restore -i 'media/original/**/*.jpg' media/**/*.jpg:1:staging/media/,./index.html:2:staging,css/style.scss:3:staging/css
-
-## .buster.json Configuration
-
-__examples:__
+>__*Important*__ Buster expects *.buster.json* to reside in your project's root folder, alongside package.json.
 
 ```json
 {
-    "command": "bust",
-    "directives": [
-        "media/meow.jpg:1:media",
-        "./index.html:2:.",
-        "css/test.css:3:css",
-        "script/test.js:3:script"
-    ]
-}
-
-{
-    "command": "restore",
-    "directives": [
-        "media/meow.jpg:1:media",
-        "./index.html:2:.",
-        "css/test.css:3:css",
-        "script/test.js:3:script"
-    ]
-}
-
-{
-    "command": "bust",
     "options": {
         "manifest": true,
         "verbose": true,
+        "ignore": "media/original/**/*.jpg,media/original/**/*.gif"
     },
     "directives": [
-        "media/**/*.jpg:1:media",
-        "./index.html:2:.",
-        "css/test.css:3:css",
-        "script/test.js:3:script"
-    ]
-}
-
-{
-    "command": "restore",
-    "options": {
-        "verbose": true
-    },
-    "directives": [
-        "media/**/*.jpg:1:media",
-        "./index.html:2:.",
-        "css/test.css:3:css",
-        "script/test.js:3:script"
-    ]
-}
-
-{
-    "command": "bust",
-    "options": {
-        "manifest": true,
-        "ignore": "media/original/**/*.jpg"
-    },
-    "directives": [
-        "media/**/*.jpg:1:staging/media",
-        "./index.html:2:staging",
-        "css/test.css:3:staging/css",
-        "script/test.js:3:staging/script"
-    ]
-}
-
-{
-    "command": "restore",
-    "options": {
-        "ignore": "media/original/**/*.jpg"
-    },
-    "directives": [
-        "media/**/*.jpg:1:staging/media",
-        "./index.html:2:staging",
-        "css/test.css:3:staging/css",
-        "script/test.js:3:staging/script"
-    ]
-}
-```
->__*Important*__ Buster expects *.buster.json* to reside in your project's root folder, alongside package.json.
-
-## package.json Configuration
-
-__examples:__
-```json
-"buster": {
-    "command": "bust",
-    "directives": [
-        "media/meow.jpg:1:media",
-        "./index.html:2:.",
-        "css/test.css:3:css",
-        "script/test.js:3:script"
-    ]
-}
-
-"buster": {
-    "command": "restore",
-    "directives": [
-        "media/meow.jpg:1:media",
-        "./index.html:2:.",
-        "css/test.css:3:css",
-        "script/test.js:3:script"
-    ]
-}
-
-"buster": {
-    "command": "bust",
-    "options": {
-        "manifest": true,
-        "verbose": true
-    },
-    "directives": [
-        "media/**/*.jpg:1:media",
-        "./index.html:2:.",
-        "css/test.css:3:css",
-        "script/test.js:3:script"
-    ]
-}
-
-"buster": {
-    "command": "restore",
-    "options": {
-        "verbose": true
-    },
-    "directives": [
-        "media/**/*.jpg:1:media",
-        "./index.html:2:.",
-        "css/test.css:3:css",
-        "script/test.js:3:script"
-    ]
-}
-
-"buster": {
-    "command": "bust",
-    "options": {
-        "manifest": true,
-        "ignore": "media/original/**/*.jpg"
-    },
-    "directives": [
-        "media/**/*.jpg:1:staging/media",
-        "./index.html:2:staging",
-        "css/test.css:3:staging/css",
-        "script/test.js:3:staging/script"
-    ]
-}
-
-"buster": {
-    "command": "restore",
-    "options": {
-        "ignore": "media/original/**/*.jpg"
-    },
-    "directives": [
-        "media/**/*.jpg:1:staging/media",
-        "./index.html:2:staging",
-        "css/test.css:3:staging/css",
-        "script/test.js:3:staging/script"
+        "release/media/**/*.jpg:1",
+        "release/./index.html:2",
+        "release/css/test.css:3",
+        "release/script/test.js:3"
     ]
 }
 ```
 
-## How Buster Resolves Its Runtime Configuration
+### Options
 
-Buster attempts to read configuration data from *params passed to it from a script*, from the *command-line*, from *.buster.json* and from within *package.json*. For each source it finds, Buster attempts to validate its data and then determines if that source's data is *complete*. If the data is valid and it is complete, then Buster builds its runtime configuration from it.
+Buster supports the following configuration options:
 
-> *Important* Buster considers a source's data to be complete if it contains a [sub command](#sub-commands) (i.e. "bust" or "restore") and one or more [operational directives](#operational-directives).
+### ignore
 
-The following pseudo code describes the process Buster uses to construct its runtime configuration:
+A _quoted list_ of one or more comma separated _project relative file paths_ to files that are to be ignored, defaults to `""`.
 
-    if paramsConfig is supplied and is complete
-        then use paramsConfig
-    else if commandLineConfig is supplied and is complete
-        then use commandLineConfig
-    else if busterConfig is supplied
-    and { ...commandLineConfig, ...busterConfig } is complete
-        then use { ...commandLineConfig, ...busterConfig }
-    else if packageJsonConfig is supplied
-    and { ...commandLineConfig, ...packageJsonConfig } is complete
-        then use { ...commandLineConfig, ...packageJsonConfig }
-    else terminate processing
+Supports _globs_ and _wildcard_ characters patterns.
 
-This *blending* of configuration data affords a lot of flexibility for managing your Buster configurations:
+### manifest
 
-* use only configuration passed from a script
-* use only command-line configuration
-* use configuration from .buster.json in combination with command-line configuration.
-* use configuration from package.json in combination with command-line configuration.
+A _boolean_, `true` to save the manifest to _buster.manifest.json_ in the project's _root folder_, defaults to `false`.
 
-## Example Project Configuration
+### verbose
 
-When working with a Node projects, for example, create 2 NPM tasks:
+A _boolean_, `true` to output verbose logging, defaults to `false`.
 
-    "bust": "buster bust -m"
+## Typical Workflows
 
-and
+### Using Buster In Node Projects
 
-    "restore": "buster restore"
+When using Buster in a Node project, install Buster locally:
 
-Place the operational directives in .buster.json.:
+```shell
+~/Development/myproject > $ npm install --save-dev @4awpawz/buster
+```
+
+Then create .buster.json in your project's root folder, alongside package.json.
+
 ```json
 {
     "directives": [
-        "media/**/*.jpg:1:staging/media",
-        "./index.html:2:staging",
-        "css/test.css:3:staging/css",
-        "script/test.js:3:staging/script"
+        "release/media/**/*.jpg:1",
+        "release/css/**/*.css.map:1",
+        "release/scripts/**/*.js.map:1",
+        "release/**/*.html:2",
+        "release/css/**/*.css:3",
+        "release/scripts/**/*.js:3"
     ]
 }
 ```
-To *cache bust* the project, run the following at the command-line:
 
-    $ npm run bust
+Then create an NPM script to call buster to cache bust your site:
 
-To *restore* the project, run the following at the command-line:
+```json
+"scripts": {
+    "bust": "buster"
+}
+```
 
-    $ npm run restore
+From the root folder of your project, enter the following to cache bust your project:
 
-## Calling Buster From A Script
+```shell
+~/Development/myproject $ npm run bust
+```
+
+### Calling Buster From A Script
+
 Buster can be called from a *script*, allowing it to be used as part of a greater workflow.
 
 Scripting Buster to *cache bust* your project:
@@ -455,45 +254,20 @@ Scripting Buster to *cache bust* your project:
 const buster = require("@4awpawz/buster");
 
 const paramsConfig = {
-    command: "bust",
     options: {
         manifest: true
     },
     directives: [
-        "media/**/*.jpg:1:staging/media",
-        "./index.html:2:staging",
-        "css/test.css:3:staging/css",
-        "script/test.js:3:staging/script"
+        "release/media/**/*.jpg:1",
+        "release/css/**/*.css.map:1",
+        "release/scripts/**/*.js.map:1",
+        "release/**/*.html:2",
+        "release/css/**/*.css:3",
+        "release/scripts/**/*.js:3"
     ]
 }
 
-buster(paramsConfig);
-```
-
-The above call to Buster is *synchronous*, and therefore execution will not wait for Buster to complete.
-
-To wait for Buster to complete, call buster *asynchronously* using async/await, as in the following:
-
-```js
 await buster(paramsConfig);
-```
-
-Scripting Buster to *restore* your project is just as easy:
-
-```js
-const buster = require("@4awpawz/buster");
-
-const paramsConfig = {
-    command: "restore",
-    directives: [
-        "media/**/*.jpg:1:staging/media",
-        "./index.html:2:staging",
-        "css/test.css:3:staging/css",
-        "script/test.js:3:staging/script"
-    ]
-}
-
-buster(paramsConfig);
 ```
 
 ## Filing Bugs And Feature Requests
@@ -501,7 +275,12 @@ buster(paramsConfig);
 
 ## Changelog
 
+### v1.0.0
+
+This is the first major release of Buster and incorporates many breaking changes from prior versions. Most notably, prior versions had a "safe mode" configuration option that would instruct Buster to cache bust "in place", meaning that it would not create backups and would not be able to restore files to their prior state. As it turns out, the vast majority of Buster's users are using "safe mode" because it fits their workflow of generating their site into a dedicated folder that can be cache busted and that could easily be repopulated by just regenerating the site. These changes were implemented to refactor Buster to precisely match this typical workflow. You can read more about the decision to refactor Buster at <a target="_blank" href="https://gettriossg.com/blog/news/2021/03/23/next-feature-release/">https://gettriossg.com/blog/news/2021/03/23/next-feature-release/</a>.
+
 ### v0.3.1
+
 This release addresses fixes for security warnings for packages used internally by Buster only. There are no changes to the code base.
 
 ### v0.3.0
@@ -568,4 +347,5 @@ Major refactor -  includes but not limited to the following:
 * Addresses a bug in od processing which would cause Buster to crash when attempting to delete files that no longer exist.
 
 ## Copyright And License
+
 Copyright &copy; 2018, `Jeffrey Schwartz`. Released under the `MIT license`.
