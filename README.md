@@ -34,19 +34,19 @@ Buster busts your browser cache problems!
 
 ## Buster Primer
 
-### Project Relative File Paths And Site Relative URLs
+### Site Relative File Paths And Site Relative URLs
 
-In the documentation that follows, references are made to __project relative file paths__ and to __site relative URLs__.
+In the documentation that follows, references are made to __site relative file paths__ and to __site relative URLs__.
 
-1. "Project relative file paths" pertain strictly to your project's file structure. They are used to declare the __input__ in [operational directives](#operational-directives) when declaring the file paths to assets in your project that you want targeted by Buster for cache busting.
+1. "site relative file paths" pertain strictly to your project's file structure. They are used to declare the __input__ in [operational directives](#operational-directives) when declaring the file paths to assets in your project that you want targeted by Buster for cache busting.
 
 1. "Site relative URLs" pertain strictly to your website's runtime environment and are used to reference assets throughout your site (e.g. the _src attribute_ of an img tag, the _href_ attribute of a link tag, the _URL() CSS function_  declared inside of a CSS stylesheet).
 
-The important thing here is to understand that in order for Buster to perform its cache busting you, the developer, must insure that your site employs site relative URLs when referencing its assets. This is because Buster converts your project relative file paths to site relative URLs which it then uses to search the content of your site's files for site relative URLs that need to be updated to point to the assets it has fingerprinted with unique hashes.
+The important thing here is to understand that in order for Buster to perform its cache busting you, the developer, must insure that your site employs site relative URLs when referencing its assets. This is because Buster converts your site relative file paths to site relative URLs which it then uses to search the content of your site's files for site relative URLs that need to be updated to point to the assets it has fingerprinted with unique hashes.
 
 #### A Typical Buster Work Flow
 
-Your development build tool generates your __production ready site__ (as opposed to development) into your project's __release folder__. When configuring Buster to cache bust your site, you would target your project files in the __release folder__ by using __project relative file paths__ in your Buster configuration's [operational directives](#operational-directives). Then from the root of your project you can use the command line to run Buster to cache bust your site in the release folder. You can then run your site from the release folder to insure that it is functioning as expected and once it is determined that it is functioning as expected you can then deploy your site directly from the release folder to its server using a command line utility such as rsync.
+Your development build tool generates your __production ready site__ (as opposed to development) into your project's __release folder__. When configuring Buster to cache bust your site, you would target your project files in the __release folder__ by using __site relative file paths__ in your Buster configuration's [operational directives](#operational-directives). Then from the root of your project you can use the command line to run Buster to cache bust your site in the release folder. You can then run your site from the release folder to insure that it is functioning as expected and once it is determined that it is functioning as expected you can then deploy your site directly from the release folder to its server using a command line utility such as rsync.
 
 In a typical website project with the following or similar project structure
 
@@ -59,7 +59,7 @@ In a typical website project with the following or similar project structure
 |- |- .buster.json
 ```
 
-the project relative file path used in an operational directive to target housecat.jpg would be release/media/housecat.jpg and the site relative URL used to identify the image file in the browser would be media/housecat.jpg.
+the site relative file path used in an operational directive to target housecat.jpg would be release/media/housecat.jpg and the site relative URL used to identify the image file in the browser would be media/housecat.jpg.
 
 ## Operational Directives
 
@@ -67,11 +67,11 @@ Buster employs a concept called an *Operational Directive*, abbreviated *od*, wh
 
 ### Input
 
-A project relative file path to one or more files.
+A site relative file path to one or more files.
 
 Supports *globs/wildcard* patterns.
 
->__Important__ Buster assumes that all project relative file paths are relative to `process.cwd()`.
+>__Important__ Buster assumes that all site relative file paths are relative to `process.cwd()`.
 
 >__Important__ Buster implements its *glob* support using node package __glob__. Please refer to node package [*glob*](https://www.npmjs.com/package/glob) should you need additional information on using globs with Buster.
 
@@ -97,7 +97,7 @@ The format of each unique MD5 hash-based file name will be __[original file's ba
 
 ### Operational Directive Examples
 
-#### Example Operational Directives Using Project Relative File Path:
+#### Example Operational Directives Using Site Relative File Path:
 
 Given the following project structure
 
@@ -128,7 +128,7 @@ will result in the following:
 |- |- .buster.json
 ```
 
-#### Example Operational Directives Using Project Relative File Paths And Globs:
+#### Example Operational Directives Using Site Relative File Paths And Globs:
 
 Given the following project structure
 
@@ -193,7 +193,7 @@ Buster supports the following configuration options:
 
 ### ignore
 
-A _quoted list_ of one or more comma separated _project relative file paths_ to files that are to be ignored, defaults to `""`.
+A _quoted list_ of one or more comma separated _site relative file paths_ to files that are to be ignored, defaults to `""`.
 
 Supports _globs_ and _wildcard_ characters patterns.
 
