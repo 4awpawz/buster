@@ -10,7 +10,7 @@ Buster busts your browser cache problems!
 
 * Cache busts your project's files in place.
 
-* Fingerprints (renames) files using MD5 hash-based cache busting file names.
+* Fingerprints (renames) files based on their content using MD5 hash-based cache busting file names.
 
 * Replaces references in files to original file names with their MD5 hash-based file names.
 
@@ -31,6 +31,12 @@ Buster busts your browser cache problems!
 ### Install Locally
 
     $ npm install --save-dev @4awpawz/buster
+
+## Important
+
+* __Buster Is Destructive__. Buster does not make backups of your files. Buster performs its operations directly on the files that operational directives indicate. See "A Typical Buster Workflow" below.
+
+* __Buster does not generate hashes based on file names__. Buster generates hashes based on the content of the files targeted by its operational directives. An empty file will always generate the same hash and multiple empty files will all have the same hash as each other. This is not a "bug" as the hash itself represents the content of the file and as all empty files have the same content (none, in this case) they will all "share" the same hash.
 
 ## Buster Primer
 
