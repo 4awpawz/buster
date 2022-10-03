@@ -1,4 +1,4 @@
-# A Cache Buster Called *Buster*
+# <img src="/github/buster.png" width="152" height="181" alt="Bulldog"> A Cache Buster Called *Buster*
 
 Buster busts your browser cache problems!
 
@@ -26,9 +26,13 @@ Buster busts your browser cache problems!
 
 ### Install Globally
 
+This is the ideal solution if you want to use Buster as a general utility from the command line.
+
     $ npm install -g @4awpawz/buster
 
 ### Install Locally
+
+This is the ideal solution if you want to integrate Buster into your project.
 
     $ npm install --save-dev @4awpawz/buster
 
@@ -213,15 +217,15 @@ A _boolean_, `true` to output verbose logging, defaults to `false`.
 
 ## Typical Workflows
 
-### Using Buster In Node Projects
+### Integrating Buster Into Your Project's Workflow
 
-When using Buster in a Node project, install Buster locally:
+Install Buster locally:
 
 ```shell
-~/Development/myproject > $ npm install --save-dev @4awpawz/buster
+myproject > $ npm install -D @4awpawz/buster
 ```
 
-Then create .buster.json in your project's root folder, alongside package.json.
+Then create a .buster.json configuration file in your project's root folder, alongside package.json:
 
 ```json
 {
@@ -236,7 +240,7 @@ Then create .buster.json in your project's root folder, alongside package.json.
 }
 ```
 
-Then create an NPM script to call buster to cache bust your site:
+Then add the following to your project's package.json's `scripts` property:
 
 ```json
 "scripts": {
@@ -244,17 +248,15 @@ Then create an NPM script to call buster to cache bust your site:
 }
 ```
 
-From the root folder of your project, enter the following to cache bust your project:
+You can then run buster from the command line by invoking it as follows:
 
 ```shell
-~/Development/myproject $ npm run bust
+myproject > npm run bust
 ```
 
-### Calling Buster From A Script
+### Calling Buster From Within A Script
 
-Buster can be called from a *script*, allowing it to be used as part of a greater workflow.
-
-Scripting Buster to *cache bust* your project:
+Buster can be called from within a *script*, allowing it to be used as part of a greater workflow:
 
 ```js
 const buster = require("@4awpawz/buster");
