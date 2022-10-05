@@ -357,3 +357,17 @@ Major refactor -  includes but not limited to the following:
 ## Copyright And License
 
 Copyright &copy; 2018, `Jeffrey Schwartz`. Released under the `MIT license`.
+
+## Community
+
+For help, discussion about best practices, or any other conversation that would benefit from being searchable:
+
+[Discuss Buster on Github](https://github.com/4awpawz/buster/discussions)
+
+For casual conversation with others about using Buster:
+
+[Discuss Buster on Twitter and other social media.](https://twitter.com).
+
+## And If You Wouldn't Mind
+
+Please consider 👀watching and 🌟starring this repo as these will greatly motivate me to keep moving forward.
