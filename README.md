@@ -101,7 +101,7 @@ Apply this operation only to those files whose contents are to be searched for s
 
 #### :3
 
-Apply this operation only to those files whose own file names are to be fingerprinted for cache busting purposes (e.g. `.jpg, .gif, .map`) and whose contents are to be searched for site relative URLs that point to assets whose file names have been fingerprinted and therefor need to be updated.
+Apply this operation only to those files whose own file names are to be fingerprinted for cache busting purposes and whose contents are to be searched for site relative URLs that point to assets whose file names have been fingerprinted and therefor need to be updated.
 
 The format of each unique MD5 hash-based file name will be __[original file's base name].[unique hash].[original file's extension]__ (e.g. `cat.[unique hash].jpg`). Should the original file's base name contain 1 or more _periods_ (e.g. __main.js__.map) the format of the MD5 hash-based file name will, as an example, be __main.[unique hash].js.map__.
 
