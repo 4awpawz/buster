@@ -4,7 +4,7 @@ Buster busts your browser cache problems!
 
 ## Version
 
-1.0.0
+1.0.1
 
 ## Features
 
