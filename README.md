@@ -4,7 +4,7 @@ Buster busts your browser cache problems!
 
 ## Version
 
-1.0.1
+1.1.0
 
 ## Features
 
@@ -40,7 +40,7 @@ This is the ideal solution if you want to integrate Buster into your project.
 
 * __Buster Is Destructive__. Buster does not make backups of your files. Buster performs its operations directly on the files that operational directives indicate. See "A Typical Buster Workflow" below.
 
-* __Buster does not generate hashes based on file names__. Buster generates hashes based on the content of the files targeted by its operational directives. An empty file will always generate the same hash and multiple empty files will all have the same hash as each other. This is not a "bug" as the hash itself represents the content of the file and as all empty files have the same content (none, in this case) they will all "share" the same hash.
+* Versions prior to v1.1.0 generated hashes based solely on the content of the files targeted by its operational directives. This opened up the opportunity for clashes on files that had no content. __To address this issue, beginning with v1.1.0, Buster will generates unique hashes for all files by including the path of the file targeted by operational directives as well as its content__.
 
 ## Buster Primer
 
