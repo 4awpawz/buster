@@ -285,6 +285,10 @@ await buster(paramsConfig);
 
 ## Changelog
 
+### v1.1.0
+
+This release includes an improved hashing algorithm that generates unique hashes for all files, including those that have no content.
+
 ### v1.0.0
 
 This is the first major release of Buster and incorporates many breaking changes from prior versions. Most notably, prior versions had a "safe mode" configuration option that would instruct Buster to cache bust "in place", meaning that it would not create backups and would not be able to restore files to their prior state. As it turns out, the vast majority of Buster's users are using "safe mode" because it fits their workflow of generating their site into a dedicated folder that can be cache busted and that could easily be repopulated by just regenerating the site. These changes were implemented to refactor Buster to precisely match this typical workflow. You can read more about the decision to refactor Buster at <a target="_blank" href="https://gettriossg.com/blog/news/2021/03/23/next-feature-release/">https://gettriossg.com/blog/news/2021/03/23/next-feature-release/</a>.
