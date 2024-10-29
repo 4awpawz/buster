@@ -1,4 +1,4 @@
-# <img src="/github/buster.png" width="152" height="181" alt="Bulldog"> A Cache Buster Called *Buster*
+# <img src="./github/buster.png" width="152" height="181" alt="Bulldog"> A Cache Buster Called *Buster*
 
 Buster busts your browser cache problems!
 
@@ -378,6 +378,8 @@ For casual conversation with others about using Buster:
 
 [Discuss Buster on Twitter and other social media.](https://twitter.com).
 
-## And If You Wouldn't Mind
+## Show Your Appreciation
 
-Please consider 👀watching and 🌟starring this repo as these will greatly motivate me to keep moving forward.
+<a href="https://www.buymeacoffee.com/4awpawz"><img src="./github/buymeacoffee.png" alt="image"></a>
+
+Please 👀 watch and leave us a 🌟 star. :)
