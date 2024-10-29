@@ -380,4 +380,6 @@ For casual conversation with others about using Buster:
 
 ## And If You Wouldn't Mind
 
+<a href="https://www.buymeacoffee.com/4awpawz"><img src="./github/buymeacoffee.png" alt="image"></a>
+
 Please consider 👀watching and 🌟starring this repo as these will greatly motivate me to keep moving forward.
