@@ -1,53 +1,53 @@
 {
-  "name": "@4awpawz/buster",
-  "version": "1.1.1",
-  "description": "A configurable cache buster called Buster. Buster busts your browser cache problems.",
-  "keywords": [
-    "browser",
-    "cache",
-    "buster",
-    "cachebuster",
-    "cache buster",
-    "cache busting",
-    "manifest",
-    "fingerprint",
-    "fingerprinting",
-    "revision",
-    "revisioning",
-    "workflow",
-    "webdev",
-    "web development"
-  ],
-  "homepage": "https://github.com/4awpawz/buster/#readme",
-  "bugs": {
-    "url": "https://github.com/4awpawz/buster/issues",
-    "email": "4awpawz@gmail.com"
-  },
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Jeffrey Schwartz",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/4awpawz/buster"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "fs-extra": "^11.1.1",
-    "glob": "^10.3.3",
-    "is-directory": "^0.3.1",
-    "make-dir": "^4.0.0"
-  },
-  "devDependencies": {
-    "eslint": "^8.48.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.28.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-standard": "^5.0.0"
-  },
-  "bin": {
-    "buster": "./cli.js"
-  }
+    "name": "@4awpawz/buster",
+    "version": "1.2.1",
+    "description": "A configurable cache buster called Buster. Buster busts your browser cache problems.",
+    "keywords": [
+        "browser",
+        "cache",
+        "buster",
+        "cachebuster",
+        "cache buster",
+        "cache busting",
+        "manifest",
+        "fingerprint",
+        "fingerprinting",
+        "revision",
+        "revisioning",
+        "workflow",
+        "webdev",
+        "web development"
+    ],
+    "homepage": "https://github.com/4awpawz/buster/#readme",
+    "bugs": {
+        "url": "https://github.com/4awpawz/buster/issues",
+        "email": "4awpawz@gmail.com"
+    },
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Jeffrey Schwartz",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/4awpawz/buster"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "fs-extra": "^11.1.1",
+        "glob": "^10.3.3",
+        "is-directory": "^0.3.1",
+        "make-dir": "^4.0.0"
+    },
+    "devDependencies": {
+        "eslint": "^8.48.0",
+        "eslint-config-standard": "^17.1.0",
+        "eslint-plugin-import": "^2.28.1",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-promise": "^6.1.1",
+        "eslint-plugin-standard": "^5.0.0"
+    },
+    "bin": {
+        "buster": "./cli.js"
+    }
 }

@@ -4,7 +4,7 @@ Buster busts your browser cache problems!
 
 ## Version
 
-1.1.1
+v1.2.1
 
 ## Features
 
@@ -284,6 +284,10 @@ await buster(paramsConfig);
 * https://github.com/4awpawz/buster/issues
 
 ## Changelog
+
+### v1.2.1
+
+This release only encompasses changes to the project's README.md file, specifically for the addition of the solicitation to 'Buy me a coffee'.
 
 ### v1.1.1
 
